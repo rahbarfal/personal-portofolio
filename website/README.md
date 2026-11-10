@@ -8,7 +8,7 @@ Static site (HTML + CSS + JS), no build step. Deploys to Vercel's free plan as-i
 website/
 ├── index.html              # all sections (Home, About, Experience, Projects, Skills, Education, Contact)
 │                           # theme: street / rolling-shutter / vinyl (shutter intro, turntable,
-│                           # paste-wall posters, draggable stickers, cassette rack + document lightbox, spray tag wall)
+│                           # paste-wall posters, draggable stickers, vinyl rack + gatefold album + document lightbox, spray tag wall)
 ├── vercel.json             # clean URLs + asset caching
 └── assets/
     ├── css/style.css       # theme colors live in :root at the top

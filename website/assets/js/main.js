@@ -85,44 +85,89 @@
      and the covered one dims. Active section comes from the zero-height
      .anchor before each layer (sticky boxes can't be measured reliably).
      ========================================================= */
+  //
+  // Performance notes (this runs on every scroll frame):
+  //  - all layout reads happen first, then all writes (no forced re-layouts)
+  //  - the darkening is a real child element; only its opacity changes, and
+  //    only when the value actually changed (no inherited CSS variables)
+  //  - the viewport height comes from a 100lvh probe, so the mobile address bar
+  //    showing/hiding doesn't re-measure the layers and make them jump
   const layers = $$('.layer');
+  const dims = layers.map((l) => {
+    const d = document.createElement('div');
+    d.className = 'layer-dim';
+    d.setAttribute('aria-hidden', 'true');
+    l.appendChild(d);
+    return d;
+  });
+  const lastDim = layers.map(() => -1);
+  const vhProbe = document.createElement('div');
+  vhProbe.setAttribute('aria-hidden', 'true');
+  vhProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
+  body.appendChild(vhProbe);
+  const ghosts = reduceMotion ? [] : $$('[data-drift]');
+
   let anchorTops = [];
-  let vh = innerHeight;
+  let vh = vhProbe.offsetHeight || innerHeight;
+  let lastW = innerWidth;
+
   const measureLayers = () => {
-    vh = innerHeight;
-    layers.forEach((l, i) => {
+    vh = vhProbe.offsetHeight || innerHeight;
+    lastW = innerWidth;
+    const heights = layers.map((l) => l.offsetHeight); // read all…
+    layers.forEach((l, i) => { // …then write all
       l.style.zIndex = String(i + 1);
-      if (!reduceMotion) l.style.top = `${Math.min(0, vh - l.offsetHeight)}px`;
+      if (!reduceMotion) l.style.top = `${Math.min(0, vh - heights[i])}px`;
     });
     anchorTops = layers.map((l) => {
       const a = l.previousElementSibling;
       return a && a.classList.contains('anchor') ? a.getBoundingClientRect().top + window.scrollY : 0;
     });
-    updateLayers();
+    frame();
   };
-  const updateLayers = () => {
+
+  // One scroll frame: active section, layer darkening, ghost-text drift
+  const frame = () => {
+    // reads
     const y = window.scrollY;
+    const tops = reduceMotion ? [] : layers.map((l) => l.getBoundingClientRect().top);
+    const ghostRects = ghosts.map((g) => g.parentElement.getBoundingClientRect());
+    // writes
     let cur = 0;
     anchorTops.forEach((t, i) => { if (y + vh * 0.45 >= t) cur = i; });
     if (layers[cur]) setActive(layers[cur].dataset.sec);
     if (reduceMotion) return;
-    // dim each layer by how much of the screen the next layer covers
-    const tops = layers.map((l) => l.getBoundingClientRect().top);
     layers.forEach((l, i) => {
       const nextTop = i + 1 < layers.length ? tops[i + 1] : vh;
-      const d = clamp(1 - nextTop / vh, 0, 1) * 0.6;
-      l.style.setProperty('--dim', d.toFixed(3));
+      const d = Math.round(clamp(1 - nextTop / vh, 0, 1) * 60) / 100; // 0 … 0.6
+      if (d !== lastDim[i]) {
+        lastDim[i] = d;
+        dims[i].style.opacity = d;
+      }
+    });
+    ghosts.forEach((g, i) => {
+      const r = ghostRects[i];
+      if (r.bottom < 0 || r.top > vh) return;
+      const p = (vh - r.top) / (vh + r.height);
+      g.style.transform = `translate3d(${(-p * 35).toFixed(2)}%, 0, 0)`;
     });
   };
-  let layerTick = false;
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (layerTick) return;
-    layerTick = true;
-    requestAnimationFrame(() => { updateLayers(); layerTick = false; });
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { frame(); ticking = false; });
   }, { passive: true });
+
   let layerRT;
-  const remeasure = () => { clearTimeout(layerRT); layerRT = setTimeout(measureLayers, 120); };
-  window.addEventListener('resize', remeasure);
+  const remeasure = () => { clearTimeout(layerRT); layerRT = setTimeout(measureLayers, 150); };
+  // 100lvh ignores the phone address bar, so its show/hide no longer re-measures
+  // (that was the "blip"); real resizes and rotations still do.
+  window.addEventListener('resize', () => {
+    const widthChanged = innerWidth !== lastW;
+    const heightChanged = Math.abs((vhProbe.offsetHeight || innerHeight) - vh) > 1;
+    if (widthChanged || heightChanged) remeasure();
+  });
   if ('ResizeObserver' in window) {
     const ro = new ResizeObserver(remeasure);
     layers.forEach((l) => ro.observe(l));
@@ -160,50 +205,45 @@
   /* =========================================================
      MOUSE PARALLAX + LAMP
      ========================================================= */
+  // Throttled to one update per frame, rects read before any writes.
   if (finePointer && !reduceMotion) {
     const hero = $('.hero');
-    const layers = $$('[data-mouse]', hero);
+    const movers = $$('[data-mouse]', hero);
     const lamps = $$('.lamp');
-    window.addEventListener('pointermove', (e) => {
-      const nx = e.clientX / innerWidth - 0.5;
-      const ny = e.clientY / innerHeight - 0.5;
-      layers.forEach((el) => {
-        const f = parseFloat(el.dataset.mouse);
-        el.style.setProperty('--mx', `${(nx * f).toFixed(1)}px`);
-        el.style.setProperty('--my', `${(ny * f).toFixed(1)}px`);
-      });
-      lamps.forEach((l) => {
-        const r = l.getBoundingClientRect();
+    let px = 0;
+    let py = 0;
+    let queued = false;
+    const apply = () => {
+      queued = false;
+      const nx = px / innerWidth - 0.5;
+      const ny = py / innerHeight - 0.5;
+      const lampRects = lamps.map((l) => l.getBoundingClientRect());
+      const heroVisible = hero.getBoundingClientRect().bottom > 0;
+      if (heroVisible) {
+        movers.forEach((el) => {
+          const f = parseFloat(el.dataset.mouse);
+          el.style.setProperty('--mx', `${(nx * f).toFixed(1)}px`);
+          el.style.setProperty('--my', `${(ny * f).toFixed(1)}px`);
+        });
+      }
+      lamps.forEach((l, i) => {
+        const r = lampRects[i];
         if (r.bottom < 0 || r.top > innerHeight) return;
-        l.style.setProperty('--lx', `${e.clientX - r.left}px`);
-        l.style.setProperty('--ly', `${e.clientY - r.top}px`);
+        l.style.setProperty('--lx', `${Math.round(px - r.left)}px`);
+        l.style.setProperty('--ly', `${Math.round(py - r.top)}px`);
       });
-    }, { passive: true });
-  }
-
-  /* =========================================================
-     GHOST TEXT DRIFT
-     ========================================================= */
-  const ghosts = $$('[data-drift]');
-  if (!reduceMotion && ghosts.length) {
-    let ticking = false;
-    const drift = () => {
-      ghosts.forEach((g) => {
-        const r = g.parentElement.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > innerHeight) return;
-        const p = (innerHeight - r.top) / (innerHeight + r.height);
-        g.style.transform = `translateX(${(-p * 35).toFixed(2)}%)`;
-      });
-      ticking = false;
     };
-    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(drift); } }, { passive: true });
-    drift();
+    window.addEventListener('pointermove', (e) => {
+      px = e.clientX;
+      py = e.clientY;
+      if (!queued) { queued = true; requestAnimationFrame(apply); }
+    }, { passive: true });
   }
 
   /* =========================================================
      SCROLL REVEAL
      ========================================================= */
-  const revealEls = $$('.section-head, .poster, .flyer, .bp, .deck, .tracks, .rack, .doc-wall, .tape-detail, .contact-inner, .tagwall, .led-strip');
+  const revealEls = $$('.section-head, .poster, .flyer, .bp, .deck, .tracks, .rack, .album-wall, .tape-detail, .contact-inner, .tagwall, .led-strip');
   revealEls.forEach((el) => el.classList.add('rv'));
   const revObs = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
@@ -285,7 +325,7 @@
       record.setAttribute('aria-valuenow', String(cur + 1));
       record.setAttribute('aria-valuetext', `${$('.t-co', t).textContent}, ${$('.t-role', t).textContent}`);
       setArm();
-      if (kick && !reduceMotion) vel += 520;
+      if (kick && !reduceMotion) { vel += 520; wake(); }
       if (playing) scheduleNext();
     };
     const scheduleNext = () => {
@@ -300,11 +340,14 @@
       $('span', playBtn).textContent = on ? 'Pause' : 'Play';
       setArm();
       if (on) scheduleNext(); else clearTimeout(autoT);
+      wake();
     };
 
-    // Spin loop
+    // Spin loop — runs only while something moves and the deck is on screen
     let last = performance.now();
     let dragging = false;
+    let running = false;
+    let deckVisible = true;
     const loop = (now) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
@@ -314,9 +357,20 @@
         angle += vel * dt;
       }
       record.style.transform = `rotate(${angle.toFixed(2)}deg)`;
+      const idle = !playing && !dragging && Math.abs(vel) < 0.5;
+      if (idle || !deckVisible) { running = false; return; }
       requestAnimationFrame(loop);
     };
-    requestAnimationFrame(loop);
+    const wake = () => {
+      if (running || !deckVisible) return;
+      running = true;
+      last = performance.now();
+      requestAnimationFrame(loop);
+    };
+    new IntersectionObserver((entries) => {
+      deckVisible = entries[0].isIntersecting;
+      if (deckVisible) wake();
+    }).observe(record);
 
     // Drag the record to scratch through tracks
     let prevA = 0;
@@ -327,6 +381,7 @@
     };
     record.addEventListener('pointerdown', (e) => {
       dragging = true;
+      wake();
       acc = 0;
       prevA = ptrAngle(e);
       record.setPointerCapture(e.pointerId);
@@ -504,19 +559,25 @@
   }
 
   /* =========================================================
-     CREDENTIALS — cassette carousel + pinned document + lightbox
+     CREDENTIALS — vinyl rack + gatefold album + lightbox
+     Picking a record: the album cover on the right swings shut,
+     gets re-dressed with the new sleeve, then swings open on its
+     spine to unveil the document printed on the inside.
      ========================================================= */
-  const rail = $('#tapeRail');
+  const rail = $('#lpRail');
   if (rail) {
-    const tapes = $$('.tape', rail);
-    const cds = $$('#tapeDetail .cd');
+    const items = $$('.lp', rail);
+    const cds = $$('#lpDetail .cd');
+    const album = $('#album');
+    const cover = $('#albumCover');
+    const coverFront = $('#coverFront');
     const docFrame = $('#docFrame');
     const docMedia = $('#docMedia');
-    const spray = $('#docSpray');
     const bar = $('#rackBar');
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     let cur = 0;
     let swapToken = 0;
+    let albumLive = reduceMotion; // becomes true once the album has scrolled into view
 
     const captionFor = (i) => {
       const a = cds[i];
@@ -535,67 +596,84 @@
       card.removeAttribute('id');
       return card;
     };
+    // The album cover reuses the rack sleeve's markup (sized in em, so it scales up)
+    const dressCover = (t) => {
+      coverFront.className = `cover-front ${[...t.classList].filter((c) => c.startsWith('lp-')).join(' ')}`;
+      coverFront.style.setProperty('--lab', t.style.getPropertyValue('--lab'));
+      coverFront.replaceChildren($('.lp-sleeve', t).cloneNode(true));
+      $('#coverBackTitle').textContent = $('.lp-title', t).textContent;
+    };
+    const openAlbum = () => album.classList.add('open');
 
     const showDoc = async (i, animate) => {
       const token = ++swapToken;
-      const t = tapes[i];
+      const t = items[i];
       const node = buildMedia(t);
       // wait for the image to decode, but never hang the swap on it
       const ready = node.tagName === 'IMG' && node.decode
         ? Promise.race([node.decode().catch(() => {}), wait(1200)])
         : Promise.resolve();
-      const fancy = animate && !reduceMotion;
+      const fancy = animate && !reduceMotion && albumLive && album.classList.contains('open');
       if (fancy) {
-        docFrame.classList.remove('in');
-        docFrame.classList.add('out');
-        await Promise.all([ready, wait(260)]);
+        album.classList.remove('open'); // cover swings shut
+        await Promise.all([ready, wait(470)]);
       } else {
         await ready;
       }
-      if (token !== swapToken) return; // a newer tape was picked meanwhile
+      if (token !== swapToken) return; // a newer record was picked meanwhile
+      dressCover(t);
       docMedia.replaceChildren(node);
-      docFrame.style.setProperty('--dr', `${rand(-3, 3).toFixed(1)}deg`);
+      docFrame.style.setProperty('--dr', `${rand(-2.5, 2.5).toFixed(1)}deg`);
       docFrame.setAttribute('aria-label', `Open full size: ${captionFor(i)}`);
-      docFrame.classList.remove('out');
+      if (!albumLive) return; // it will open when it scrolls into view
       if (fancy) {
-        void docFrame.offsetWidth;
-        docFrame.classList.add('in');
-        spray.style.setProperty('--spray', getComputedStyle(t).getPropertyValue('--glow').trim() || '#e9ff2e');
-        spray.classList.remove('go');
-        void spray.offsetWidth;
-        spray.classList.add('go');
+        await wait(110); // let the new cover register before it swings open
+        if (token !== swapToken) return;
       }
+      openAlbum();
     };
 
-    const centerTape = (t, smooth = true) => {
+    const centerItem = (t, smooth = true) => {
       const r = rail.getBoundingClientRect();
       const tr = t.getBoundingClientRect();
       rail.scrollBy({ left: tr.left + tr.width / 2 - (r.left + r.width / 2), behavior: smooth && !reduceMotion ? 'smooth' : 'auto' });
     };
 
     const select = (i, { focus = false, animate = true } = {}) => {
-      i = clamp(i, 0, tapes.length - 1);
+      i = clamp(i, 0, items.length - 1);
       const changed = i !== cur;
       cur = i;
-      tapes.forEach((t, j) => {
+      items.forEach((t, j) => {
         t.setAttribute('aria-selected', String(j === i));
         t.tabIndex = j === i ? 0 : -1;
       });
       cds.forEach((c, j) => c.classList.toggle('on', j === i));
-      if (focus) tapes[i].focus({ preventScroll: true });
-      centerTape(tapes[i], animate);
+      if (focus) items[i].focus({ preventScroll: true });
+      centerItem(items[i], animate);
       if (changed || !animate) showDoc(i, animate && changed);
     };
 
-    tapes.forEach((t, i) => t.addEventListener('click', () => select(i)));
+    items.forEach((t, i) => t.addEventListener('click', () => select(i)));
     $('.rack-prev').addEventListener('click', () => select(cur - 1));
     $('.rack-next').addEventListener('click', () => select(cur + 1));
     rail.addEventListener('keydown', (e) => {
-      const map = { ArrowRight: cur + 1, ArrowDown: cur + 1, ArrowLeft: cur - 1, ArrowUp: cur - 1, Home: 0, End: tapes.length - 1 };
+      const map = { ArrowRight: cur + 1, ArrowDown: cur + 1, ArrowLeft: cur - 1, ArrowUp: cur - 1, Home: 0, End: items.length - 1 };
       if (!(e.key in map)) return;
       e.preventDefault();
       select(map[e.key], { focus: true });
     });
+    // A closed cover can be clicked to open it
+    cover.addEventListener('click', () => { albumLive = true; openAlbum(); });
+
+    // First time the album scrolls into view, the gatefold opens by itself
+    if (!albumLive) {
+      const albumObs = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        albumObs.disconnect();
+        setTimeout(() => { albumLive = true; openAlbum(); }, 250);
+      }, { threshold: 0.45 });
+      albumObs.observe(album);
+    }
 
     // Progress bar under the rack
     const updateBar = () => {
@@ -640,7 +718,7 @@
     const lbClose = $('.lb-close', lb);
     let lbLast = null;
     const openLb = () => {
-      lbMedia.replaceChildren(buildMedia(tapes[cur]));
+      lbMedia.replaceChildren(buildMedia(items[cur]));
       lbCap.textContent = captionFor(cur);
       lbLast = document.activeElement;
       lb.hidden = false;
@@ -738,6 +816,7 @@
       const dripChance = nozzle === 'fat' ? 0.012 : nozzle === 'splatter' ? 0.02 : 0.003;
       if (Math.random() < dripChance && drips.length < 30) {
         drips.push({ x: x + rand(-r * 0.4, r * 0.4), y, len: 0, max: rand(20, 90), w: rand(1.4, 3), c: color });
+        startDrips();
       }
     };
     const animDrips = () => {
@@ -760,9 +839,16 @@
           drips.splice(i, 1);
         }
       }
+      if (drips.length) requestAnimationFrame(animDrips);
+      else dripping = false;
+    };
+    // only animate while there are drips running down the wall
+    let dripping = false;
+    const startDrips = () => {
+      if (dripping) return;
+      dripping = true;
       requestAnimationFrame(animDrips);
     };
-    requestAnimationFrame(animDrips);
 
     let painting = false;
     let lx = 0;
