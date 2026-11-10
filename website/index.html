@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naufal Akbar Rahardjo — Data Analyst</title>
+  <meta name="description" content="Portfolio of Naufal Akbar Rahardjo, a Jakarta-based Data Analyst with experience across banking (Bank Mandiri, BSI) and tech (GoTo). SQL, Python, dashboards, and machine learning." />
+  <meta name="theme-color" content="#0b0d12" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Naufal Akbar Rahardjo — Data Analyst" />
+  <meta property="og:description" content="Turning data into clear, actionable decisions. Banking & tech experience in SQL, Python, dashboards, and ML." />
+  <meta property="og:image" content="assets/img/naufal.jpg" />
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Bungee&family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Icon sprite -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="scrawl" viewBox="0 0 120 10"><path d="M2 6 C 20 1, 34 9, 52 5 S 86 2, 100 6 S 114 7, 118 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" pathLength="140"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8s-2 1.3-2 2.7V21h-4z"/></symbol>
+    <symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 4.9.4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></symbol>
+    <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m-4.5-4.5L12 15l4.5-4.5M5 19h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h11v11H9zM5 15H4V4h11v1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3c5 0 7 10 12 10h3m0 0-3-3m3 3-3 3M3 17h3c1.6 0 2.8-1 3.8-2.4M21 7h-3c-1.6 0-2.8 1-3.8 2.4M21 7l-3-3m3 3-3 3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Entry shutter -->
+  <div class="door" id="door" aria-hidden="true">
+    <div class="door-tag">Naufal</div>
+    <div class="door-hint">Lift the shutter</div>
+    <div class="door-handle"></div>
+  </div>
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <a class="logo" href="#home" aria-label="Naufal Akbar Rahardjo, back to top">Naufal</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about"><span>About</span><svg class="scrawl" aria-hidden="true"><use href="#scrawl"/></svg></a>
+      <a href="#experience"><span>Experience</span><svg class="scrawl" aria-hidden="true"><use href="#scrawl"/></svg></a>
+      <a href="#projects"><span>Projects</span><svg class="scrawl" aria-hidden="true"><use href="#scrawl"/></svg></a>
+      <a href="#skills"><span>Skills</span><svg class="scrawl" aria-hidden="true"><use href="#scrawl"/></svg></a>
+      <a href="#credentials"><span>Credentials</span><svg class="scrawl" aria-hidden="true"><use href="#scrawl"/></svg></a>
+      <a href="#contact"><span>Contact</span><svg class="scrawl" aria-hidden="true"><use href="#scrawl"/></svg></a>
+    </nav>
+    <div class="topbar-actions">
+      <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open section menu"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+      <a class="btn btn-yellow btn-sm" href="assets/docs/CV_Naufal_Akbar_Rahardjo_Data_Analyst.pdf" download><svg aria-hidden="true"><use href="#i-dl"/></svg><span>Resume</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <div class="anchor" id="home"></div>
+    <section class="hero shutter layer" data-sec="home" aria-labelledby="hero-name">
+      <div class="lamp" aria-hidden="true"></div>
+      <div class="bomb" aria-hidden="true" data-mouse="22">
+        <span class="slap slap-1">SQL</span>
+        <span class="slap slap-2">Python</span>
+        <span class="slap slap-3">LLM</span>
+        <span class="slap slap-4">BI</span>
+        <span class="slap slap-5">Tableau</span>
+      </div>
+      <div class="buffs" aria-hidden="true" data-mouse="-8"><span class="buff buff-1">Data</span><span class="buff buff-2">NR</span></div>
+      <div class="rail" aria-hidden="true"><span class="hasp"></span></div>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="name-tag" data-mouse="10">
+            <div class="name-tag-head" aria-hidden="true">
+              <span class="hey">Hey yo</span>
+              <span class="call">they call me</span>
+            </div>
+            <h1 class="name-tag-body" id="hero-name"><span class="marker">Naufal</span><span class="sr-only"> Akbar Rahardjo</span></h1>
+          </div>
+          <p class="role">Data Analyst <em>&amp;</em> ML enthusiast</p>
+          <p class="role-sub">SQL · Python · Dashboards · Machine Learning · Jakarta</p>
+          <p class="lede">Computer Science graduate from IPB University. I've worked with data in banking and tech at <strong>Bank Mandiri</strong>, <strong>GoTo</strong> and <strong>Bank Syariah Indonesia</strong>, turning messy records into clear, actionable decisions.</p>
+          <div class="cta-row">
+            <a class="btn btn-yellow" href="mailto:naufalakbar06@gmail.com?subject=Let%27s%20talk"><svg aria-hidden="true"><use href="#i-mail"/></svg><span>naufalakbar06@gmail.com</span></a>
+            <a class="btn btn-green" href="https://linkedin.com/in/naufal-rahardjo" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-in"/></svg><span>LinkedIn</span></a>
+          </div>
+        </div>
+
+        <figure class="photo-sticker" data-mouse="-14">
+          <span class="tape" aria-hidden="true"></span>
+          <span class="sticker-mini" aria-hidden="true">Numbers with a why</span>
+          <img src="assets/img/naufal.jpg" width="781" height="1000" fetchpriority="high" decoding="async" alt="Portrait of Naufal Akbar Rahardjo at IPB University" />
+          <figcaption>Naufal A. Rahardjo</figcaption>
+        </figure>
+      </div>
+
+      <ul class="led-strip">
+        <li class="led-cell"><div class="led" data-value="1" data-suffix="+" role="img" aria-label="1+"></div><p>years of internship experience</p></li>
+        <li class="led-cell"><div class="led" data-value="30" data-suffix="K+" role="img" aria-label="30K+"></div><p>merchant records analyzed</p></li>
+        <li class="led-cell"><div class="led" data-value="10" data-suffix="K+" role="img" aria-label="10K+"></div><p>LLM data points curated</p></li>
+        <li class="led-cell"><div class="led" data-value="0.942" data-decimals="3" role="img" aria-label="0.942"></div><p>mAP50-95 on YOLOv12</p></li>
+      </ul>
+    </section>
+
+    <div class="seam" aria-hidden="true"><span class="slap seam-1">Data cleaning</span><span class="slap seam-3">Hey yo</span></div>
+    <div class="tape-band" aria-hidden="true">
+      <div class="tape-track"><span>SQL</span><span>Python</span><span>PostgreSQL</span><span>Tableau</span><span>Excel</span><span>Data Visualization</span><span>PyTorch</span><span>LLM Evaluation</span><span>YOLO</span><span>SQL</span><span>Python</span><span>PostgreSQL</span><span>Tableau</span><span>Excel</span><span>Data Visualization</span><span>PyTorch</span><span>LLM Evaluation</span><span>YOLO</span></div>
+    </div>
+
+    <!-- ============ ABOUT ============ -->
+    <div class="anchor" id="about"></div>
+    <section class="intro layer" data-sec="about" aria-labelledby="about-h">
+      <article class="poster">
+        <span class="tape tape-b" aria-hidden="true"></span><span class="tape tape-c" aria-hidden="true"></span>
+        <h2 id="about-h">The numbers matter. <span class="marker-hl">The why matters more.</span></h2>
+        <div class="poster-cols">
+          <p>I enjoy the full journey of data: cleaning messy records, finding the pattern that matters, and presenting it in a way that helps a team decide what to do next. Over 1+ years of internships, I've analyzed data from 30,000+ QRIS/EDC merchants at Bank Syariah Indonesia, curated and evaluated data for the SahabatAI LLM at GoTo, and built GovHub for the Infrastructure Governance team at Bank Mandiri.</p>
+          <p>My background in Computer Science gives me a solid foundation in machine learning and computer vision, which lets me go beyond reporting when a problem calls for it. Based in Jakarta, fluent in Indonesian and English (GE-EPT 597), with a Machine Learning Specialization from Stanford Online &amp; DeepLearning.AI and experience across banking and technology.</p>
+        </div>
+        <ul class="poster-list"><li>Data cleaning &amp; validation</li><li>Exploratory analysis</li><li>Dashboards &amp; BI</li><li>SQL &amp; Python</li><li>LLM / VLM evaluation</li><li>Computer vision</li></ul>
+      </article>
+      <aside class="flyer" aria-label="Availability">
+        <p class="flyer-kicker"><span class="pulse"></span>Available now</p>
+        <p class="flyer-big">Open to full-time Data Analyst roles</p>
+        <p class="flyer-small">Data Analyst and Data Science opportunities in Jakarta or remote. B.Sc. Computer Science, IPB University · GPA 3.48.</p>
+        <a class="flyer-link" href="#contact"><span>Let's talk</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </aside>
+    </section>
+
+    <!-- ============ EXPERIENCE (TURNTABLE) ============ -->
+    <div class="anchor" id="experience"></div>
+    <section class="deck-section layer" data-sec="experience" aria-labelledby="exp-h">
+      <div class="ghost" aria-hidden="true" data-drift>Experience Experience</div>
+      <div class="section-head">
+        <h2 id="exp-h">Experience</h2>
+        <p>Three internships, three very different datasets. Each one taught me something new about turning data into decisions. <strong>Press play on my story.</strong></p>
+      </div>
+
+      <div class="deck-layout">
+        <div class="deck">
+          <div class="plinth">
+            <div class="platter">
+              <div class="record" id="record" role="slider" tabindex="0" aria-label="Experience record. Drag or use the arrow keys to change track" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+                <div class="record-label" id="recordLabel" aria-hidden="true"></div>
+              </div>
+              <div class="record-sheen" aria-hidden="true"></div>
+            </div>
+            <svg class="tonearm" id="tonearm" viewBox="0 0 120 330" aria-hidden="true" focusable="false">
+              <circle cx="60" cy="40" r="30" fill="#1d212b" stroke="#3b4250" stroke-width="3"/>
+              <path d="M60 40 L60 230 L40 290" fill="none" stroke="#c9ced8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="60" cy="40" r="12" fill="#c9ced8"/>
+              <rect x="24" y="278" width="30" height="40" rx="5" transform="rotate(28 39 298)" fill="#ff3b24"/>
+            </svg>
+            <div class="deck-controls">
+              <button class="deck-btn" id="playBtn" type="button" aria-pressed="false" aria-label="Play"><svg class="i-play" aria-hidden="true"><use href="#i-play"/></svg><svg class="i-pause" aria-hidden="true"><use href="#i-pause"/></svg><span aria-hidden="true">Play</span></button>
+              <div class="rpm" aria-hidden="true"><span class="rpm-dot"></span><small>33⅓</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tracks">
+          <ol class="tracklist" id="tracklist">
+            <li><button class="track" type="button" data-i="0" data-co="Bank Mandiri" data-yr="2025 — Now" style="--tc:#e9ff2e">
+              <span class="side">A1</span>
+              <span><span class="t-co">Bank Mandiri</span><span class="t-role">IT Infrastructure Intern</span></span>
+              <span class="t-yr"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>2025 — Now</span>
+            </button></li>
+            <li><button class="track" type="button" data-i="1" data-co="GoTo" data-yr="2025" style="--tc:#3dff8a">
+              <span class="side">A2</span>
+              <span><span class="t-co">GoTo Gojek Tokopedia</span><span class="t-role">Data Scientist Intern · SahabatAI</span></span>
+              <span class="t-yr"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Jan — Dec 2025</span>
+            </button></li>
+            <li><button class="track" type="button" data-i="2" data-co="BSI" data-yr="2024" style="--tc:#22d3ff">
+              <span class="side">B1</span>
+              <span><span class="t-co">Bank Syariah Indonesia</span><span class="t-role">Digital Banking Operations Intern</span></span>
+              <span class="t-yr"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Aug — Dec 2024</span>
+            </button></li>
+          </ol>
+
+          <div class="track-detail" id="trackDetail" aria-live="polite">
+            <article class="td" data-i="0">
+              <h3 class="td-role">IT Infrastructure Intern <span class="td-live">Current</span></h3>
+              <p class="td-meta">Bank Mandiri · Internal Control &amp; Governance · Aug 2025 — Present · Jakarta</p>
+              <ul class="td-list">
+                <li>Validated infrastructure operational data for accuracy and compliance with technical guidelines, supporting internal, external, and regulatory audits.</li>
+                <li>Developed <strong>GovHub (IFS Governance Hub)</strong>, a Flask and PostgreSQL web application with monitoring, digitized business flows, and supporting features for the Infrastructure Governance team.</li>
+              </ul>
+              <p class="td-tags"><span>Flask</span><span>PostgreSQL</span><span>Data Validation</span><span>Audit</span></p>
+            </article>
+            <article class="td" data-i="1">
+              <h3 class="td-role">Data Scientist Intern</h3>
+              <p class="td-meta">GoTo Gojek Tokopedia · SahabatAI · Jan 6 — Dec 7, 2025 · Jakarta · Program completed</p>
+              <ul class="td-list">
+                <li>Built and refined <strong>10,000+</strong> voice and text data points used to train and evaluate large language models for the SahabatAI project.</li>
+                <li>Evaluated open-source vision-language models (<strong>10B+ parameters</strong>) with VLMEvalKit, analyzing responses to image-based prompts to assess visual understanding and reasoning.</li>
+                <li>Red-teamed LLMs with prompt engineering to find patterns where safeguards could be bypassed, documenting findings to inform safeguard improvements.</li>
+              </ul>
+              <p class="td-tags"><span>LLM</span><span>VLMEvalKit</span><span>Prompt Engineering</span><span>Dataset Curation</span></p>
+            </article>
+            <article class="td" data-i="2">
+              <h3 class="td-role">Digital Banking Operations Intern</h3>
+              <p class="td-meta">Bank Syariah Indonesia · BSI Internship Program Batch 7 (MSIB Kampus Merdeka) · IT &amp; Development &amp; Digital Ops · Aug 2024 — Dec 2024 · Jakarta</p>
+              <ul class="td-list">
+                <li>Managed and analyzed data from <strong>30,000+</strong> QRIS/EDC merchants (identification, visualization, and analysis) to generate insights on failed disbursement cases for team decision-making.</li>
+                <li>Helped design the resolution workflow for failed disbursements, coordinating with customers, IT, and operations so reimbursement complied with national regulations and company policy.</li>
+              </ul>
+              <p class="td-tags"><span>Data Analysis</span><span>Visualization</span><span>QRIS / EDC</span><span>Process Design</span></p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS (PASTE WALL) ============ -->
+    <div class="anchor" id="projects"></div>
+    <section class="paste-wall layer" data-sec="projects" aria-labelledby="proj-h">
+      <div class="ghost" aria-hidden="true" data-drift>Projects Projects</div>
+      <div class="section-head">
+        <h2 id="proj-h">Projects</h2>
+        <p>From governance dashboards to drone object detection. <strong>The tool is the means. The insight is the point.</strong></p>
+      </div>
+
+      <ul class="posters">
+        <!-- TODO: add real links/screenshots when ready -->
+        <li class="bposter"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+          <span class="bp-art art-yellow" aria-hidden="true">
+            <span class="mock"><i style="height:45%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:85%"></i><i style="height:62%"></i><i style="height:92%"></i><i style="height:74%"></i></span>
+            <span class="bp-num">GovHub</span>
+            <span class="go-sticker">Internal · on request</span>
+          </span>
+          <h3>GovHub — IFS Governance Hub</h3>
+          <p>A Flask and PostgreSQL app that brings monitoring and digitized business flows into one place for Bank Mandiri's Infrastructure Governance team.</p>
+          <span class="bp-meta">2025 — 2026 · Bank Mandiri</span>
+        </div></li>
+
+        <li class="bposter"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+          <span class="bp-art art-pink" aria-hidden="true">
+            <span class="bp-num">0.942</span><span class="bp-unit">mAP50-95</span>
+            <span class="go-sticker">Case study soon</span>
+          </span>
+          <h3>Drone Object Detection with YOLOv12</h3>
+          <p>Curated and labeled 1,200+ drone-captured images and trained a YOLOv12 object detection model with high precision.</p>
+          <span class="bp-meta">2025 · Final project · IPB</span>
+        </div></li>
+
+        <li class="bposter"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+          <span class="bp-art art-cyan" aria-hidden="true">
+            <span class="bp-num">10K+</span><span class="bp-unit">data points</span>
+            <span class="go-sticker">Write-up soon</span>
+          </span>
+          <h3>LLM &amp; VLM Evaluation</h3>
+          <p>Dataset curation, benchmarking of 10B+ parameter vision-language models with VLMEvalKit, and red-teaming to strengthen safeguards.</p>
+          <span class="bp-meta">2025 · GoTo · SahabatAI</span>
+        </div></li>
+
+        <li class="bposter"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+          <span class="bp-art art-green" aria-hidden="true">
+            <span class="bp-num">30K+</span><span class="bp-unit">merchants</span>
+            <span class="go-sticker">Case study soon</span>
+          </span>
+          <h3>Failed Disbursement Analysis</h3>
+          <p>Identified, visualized, and analyzed failed QRIS/EDC disbursement cases, and helped design the cross-team resolution workflow.</p>
+          <span class="bp-meta">2024 · Bank Syariah Indonesia</span>
+        </div></li>
+
+        <li class="bposter"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+          <span class="bp-art art-red" aria-hidden="true">
+            <span class="bp-num">A</span><span class="bp-unit">final grade</span>
+            <span class="go-sticker">Repo soon</span>
+          </span>
+          <h3>Computer Vision PWA — Capstone</h3>
+          <p>Team capstone project that built a computer vision solution delivered as a Progressive Web App.</p>
+          <span class="bp-meta">2024 · Bangkit Academy</span>
+        </div></li>
+
+        <!-- TODO: replace with your next project (e.g. a SQL / Tableau case study) -->
+        <li class="bposter bposter-empty"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span>
+          <span class="bp-art art-blank" aria-hidden="true"><span class="bp-num">+</span></span>
+          <h3>Next project</h3>
+          <p>A space for my next data analysis case study. Stay tuned.</p>
+          <span class="bp-meta">Coming soon</span>
+        </div></li>
+      </ul>
+
+      <div class="section-cta">
+        <a class="btn btn-cyan" href="https://github.com/rahbarfal" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-gh"/></svg><span>More on GitHub</span></a>
+      </div>
+    </section>
+
+    <!-- Companies band -->
+    <section class="brands-band" aria-label="Where I've worked and studied">
+      <div class="brands-track">
+        <ul class="brands-list"><li>Bank Mandiri</li><li>GoTo</li><li>Bank Syariah Indonesia</li><li>IPB University</li><li>Bangkit Academy</li><li>SahabatAI</li></ul>
+        <ul class="brands-list" aria-hidden="true"><li>Bank Mandiri</li><li>GoTo</li><li>Bank Syariah Indonesia</li><li>IPB University</li><li>Bangkit Academy</li><li>SahabatAI</li></ul>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS (STICKERS) ============ -->
+    <div class="anchor" id="skills"></div>
+    <section class="skills shutter layer" data-sec="skills" aria-labelledby="skills-h">
+      <div class="ghost" aria-hidden="true" data-drift>Skills Skills</div>
+      <div class="section-head">
+        <h2 id="skills-h">The toolkit</h2>
+        <p>Technical on the left, soft skills on the right. Every sticker is a skill: drag them, rearrange them, slap them wherever you like.</p>
+        <button class="btn btn-ghost btn-sm" type="button" id="shuffleBtn"><svg aria-hidden="true"><use href="#i-shuffle"/></svg><span>Re-slap</span></button>
+      </div>
+      <div class="sticker-wall" id="stickerWall">
+        <span class="wall-tag wall-tag-tech" aria-hidden="true">Technical skills</span>
+        <span class="wall-tag wall-tag-soft" aria-hidden="true">Soft-Skills</span>
+        <ul class="sticker-group" data-group="tech" aria-label="Technical skills">
+          <li class="sticker label" tabindex="0" style="--bg:#e9ff2e">SQL (PostgreSQL)</li>
+          <li class="sticker pill" tabindex="0" style="--bg:#22d3ff">Python · pandas · NumPy</li>
+          <li class="sticker round" tabindex="0" style="--bg:#ff3d8b">Data Visualization</li>
+          <li class="sticker tag" tabindex="0" style="--bg:#f4f1ea">Tableau</li>
+          <li class="sticker label" tabindex="0" style="--bg:#3dff8a">Excel</li>
+          <li class="sticker pill" tabindex="0" style="--bg:#ff3b24">Data Cleaning &amp; EDA</li>
+          <li class="sticker tag" tabindex="0" style="--bg:#ffb12b">Dashboarding</li>
+          <li class="sticker round" tabindex="0" style="--bg:#22d3ff">LLM / VLM Evaluation</li>
+          <li class="sticker label" tabindex="0" style="--bg:#f4f1ea">PyTorch · TensorFlow</li>
+          <li class="sticker pill" tabindex="0" style="--bg:#e9ff2e">Hugging Face</li>
+          <li class="sticker tag" tabindex="0" style="--bg:#ff3d8b">Prompt Engineering</li>
+          <li class="sticker round" tabindex="0" style="--bg:#e9ff2e">YOLO · OpenCV</li>
+          <li class="sticker label" tabindex="0" style="--bg:#ff3b24">Flask</li>
+          <li class="sticker pill" tabindex="0" style="--bg:#3dff8a">Git · Docker</li>
+        </ul>
+        <ul class="sticker-group" data-group="soft" aria-label="Soft skills">
+          <li class="sticker tag" tabindex="0" style="--bg:#22d3ff">Stakeholder Communication</li>
+          <li class="sticker label" tabindex="0" style="--bg:#ffb12b">Problem-Solving</li>
+          <li class="sticker pill" tabindex="0" style="--bg:#3dff8a">Teamwork</li>
+          <li class="sticker round" tabindex="0" style="--bg:#f4f1ea">Attention to Detail</li>
+          <li class="sticker pill" tabindex="0" style="--bg:#ff3d8b">Project Management</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="seam seam-b" aria-hidden="true"><span class="slap seam-4">Stay curious</span><span class="slap seam-5">Learning, always</span></div>
+
+    <!-- ============ CREDENTIALS (CASSETTE RACK) ============ -->
+    <div class="anchor" id="credentials"></div>
+    <section class="tapes-section layer" data-sec="credentials" aria-labelledby="cred-h">
+      <div class="ghost" aria-hidden="true" data-drift>Credentials Credentials</div>
+      <div class="section-head">
+        <h2 id="cred-h">Credentials</h2>
+        <p><em>Mixtapes on the rack.</em> Certificates, internship letters and degrees, one tape each. Slide through the rack and pop a tape in to pin its paperwork on the wall. <strong>Tap the document to see it up close.</strong></p>
+      </div>
+
+      <div class="tapes-layout">
+        <div class="rack">
+          <div class="rack-legend" aria-hidden="true">
+            <span class="lg lg-cert">Certifications</span>
+            <span class="lg lg-exp">Experience</span>
+            <span class="lg lg-edu">Education</span>
+          </div>
+
+          <div class="rack-shelf">
+            <button class="rack-nav rack-prev" type="button" aria-label="Previous tape"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <div class="tape-rail" id="tapeRail" role="listbox" aria-label="Credentials" aria-orientation="horizontal">
+              <span class="rail-tab tab-cert" aria-hidden="true">Certs</span>
+              <button class="tape tape-cert" type="button" role="option" aria-selected="true" data-i="0" style="--lab:#e9ff2e" data-doc="assets/img/credentials/stanford-ml.jpg" data-alt="Machine Learning Specialization certificate from Stanford Online and DeepLearning.AI on Coursera, July 2024">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Cert</span><span class="tl-side">A1</span></span><span class="tl-title">Machine Learning Specialization</span><span class="tl-meta">Stanford Online · 2024</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+              <button class="tape tape-cert" type="button" role="option" aria-selected="false" data-i="1" style="--lab:#ff3d8b" data-doc="assets/img/credentials/ge-ept-english.jpg" data-alt="Golden English Proficiency Test certificate, overall score 597, May 2026">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Cert</span><span class="tl-side">A2</span></span><span class="tl-title">English Proficiency · 597</span><span class="tl-meta">GE-EPT · 2026</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+              <button class="tape tape-cert" type="button" role="option" aria-selected="false" data-i="2" style="--lab:#22d3ff" data-doc="assets/img/credentials/bangkit-transcript.jpg" data-alt="Bangkit 2024 interim transcript, Machine Learning path, 958 hours">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Cert</span><span class="tl-side">A3</span></span><span class="tl-title">Bangkit Academy · ML Path</span><span class="tl-meta">Google · GoTo · Traveloka · 2024</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+
+              <span class="rail-tab tab-exp" aria-hidden="true">Work</span>
+              <button class="tape tape-exp" type="button" role="option" aria-selected="false" data-i="3" data-doc="assets/img/credentials/goto-completion.jpg" data-alt="GoTo Gojek Tokopedia completion of internship program letter, Data Scientist Intern, January to December 2025">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Work</span><span class="tl-side">B1</span></span><span class="tl-title">GoTo · Data Scientist Intern</span><span class="tl-meta">Completion letter · 2025</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+              <button class="tape tape-exp" type="button" role="option" aria-selected="false" data-i="4" data-doc="assets/img/credentials/bsi-internship.jpg" data-alt="Bank Syariah Indonesia internship certificate, BSI Internship Program Batch 7, IT and Development and Digital Ops">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Work</span><span class="tl-side">B2</span></span><span class="tl-title">BSI · Internship Batch 7</span><span class="tl-meta">MSIB Kampus Merdeka · 2024</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+
+              <span class="rail-tab tab-edu" aria-hidden="true">School</span>
+              <button class="tape tape-edu" type="button" role="option" aria-selected="false" data-i="5" data-card="card-ipb">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Edu</span><span class="tl-side">C1</span></span><span class="tl-title">IPB University</span><span class="tl-meta">B.Sc. Computer Science · 2021–25</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+              <button class="tape tape-edu" type="button" role="option" aria-selected="false" data-i="6" data-card="card-himalkom">
+                <span class="tape-shell"><span class="tape-label"><span class="tl-top"><span class="tl-kind">Edu</span><span class="tl-side">C2</span></span><span class="tl-title">HIMALKOM IPB</span><span class="tl-meta">HR Development Staff · 2023</span><span class="tape-window"><span class="reel"></span><span class="reel"></span></span></span><span class="tape-foot"></span></span>
+              </button>
+            </div>
+            <button class="rack-nav rack-next" type="button" aria-label="Next tape"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+          <div class="rack-progress" aria-hidden="true"><i id="rackBar"></i></div>
+        </div>
+
+        <!-- Document pinned on the wall, right of the rack -->
+        <div class="doc-wall">
+          <button class="doc-frame" id="docFrame" type="button" aria-label="Open document full size">
+            <span class="doc-tape doc-tape-l" aria-hidden="true"></span>
+            <span class="doc-tape doc-tape-r" aria-hidden="true"></span>
+            <span class="doc-media" id="docMedia"></span>
+            <span class="doc-zoom" aria-hidden="true">Tap to zoom</span>
+          </button>
+          <span class="doc-spray" id="docSpray" aria-hidden="true"></span>
+        </div>
+
+        <div class="tape-detail" id="tapeDetail" aria-live="polite">
+          <article class="cd" data-i="0">
+            <p class="cd-year">Jul 2024 · Certification</p>
+            <h3 class="cd-title">Machine Learning Specialization</h3>
+            <p class="cd-inst">Stanford Online &amp; DeepLearning.AI · Coursera · 3 courses</p>
+            <p class="cd-desc">Supervised learning (linear and logistic regression, neural networks, decision trees), unsupervised learning (clustering, anomaly detection), recommender systems, and reinforcement learning, taught by Andrew Ng.</p>
+            <ul class="cd-scores cd-scores-plain">
+              <li><span>Supervised Machine Learning: Regression and Classification</span></li>
+              <li><span>Advanced Learning Algorithms</span></li>
+              <li><span>Unsupervised Learning, Recommenders, Reinforcement Learning</span></li>
+            </ul>
+            <a class="cd-link" href="https://coursera.org/verify/specialization/XVM9SK2EXZKR" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="1">
+            <p class="cd-year">May 2026 · Certification</p>
+            <h3 class="cd-title">English Proficiency · Score 597</h3>
+            <p class="cd-inst">Golden English Proficiency Test (GE-EPT) · valid until May 2027</p>
+            <ul class="cd-scores">
+              <li><span>Listening Comprehension</span><b>65</b></li>
+              <li><span>Structure &amp; Written Expressions</span><b>57</b></li>
+              <li><span>Vocabulary &amp; Reading Comprehension</span><b>57</b></li>
+            </ul>
+          </article>
+          <article class="cd" data-i="2">
+            <p class="cd-year">Feb — Jun 2024 · Certification</p>
+            <h3 class="cd-title">Bangkit Academy · Machine Learning Path</h3>
+            <p class="cd-inst">Bangkit 2024 · by Google, GoTo, Traveloka · Kampus Merdeka</p>
+            <p class="cd-desc">958 hours across 11 courses and specializations, average score 88.6 (A), ending in a computer vision PWA capstone.</p>
+            <ul class="cd-scores">
+              <li><span>Preparing for TensorFlow Developer Certification</span><b>92.3</b></li>
+              <li><span>Machine Learning Specialization</span><b>92.1</b></li>
+              <li><span>TensorFlow: Advanced Techniques Specialization</span><b>91.8</b></li>
+              <li><span>DeepLearning.AI TensorFlow Developer Professional Certificate</span><b>91.4</b></li>
+              <li><span>Google Data Analytics</span><b>88.6</b></li>
+            </ul>
+          </article>
+          <article class="cd" data-i="3">
+            <p class="cd-year">Jan 6 — Dec 7, 2025 · Experience</p>
+            <h3 class="cd-title">Completion of Internship Program</h3>
+            <p class="cd-inst">PT GoTo Gojek Tokopedia Tbk · Data Scientist Intern · SahabatAI</p>
+            <p class="cd-desc">Official letter confirming I completed the full internship program. Day to day: building 10,000+ LLM data points, evaluating 10B+ parameter vision-language models, and red-teaming LLM safeguards.</p>
+            <a class="cd-link" href="#experience"><span>See the experience track</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="4">
+            <p class="cd-year">Aug — Dec 2024 · Experience</p>
+            <h3 class="cd-title">BSI Internship Program Batch 7</h3>
+            <p class="cd-inst">Bank Syariah Indonesia · MSIB Kampus Merdeka · IT &amp; Development &amp; Digital Ops</p>
+            <p class="cd-desc">Certificate for the Kampus Merdeka certified internship at BSI, where I analyzed 30,000+ QRIS/EDC merchant records and helped design the failed-disbursement resolution workflow.</p>
+            <a class="cd-link" href="#experience"><span>See the experience track</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="5">
+            <p class="cd-year">Aug 2021 — Oct 2025 · Education</p>
+            <h3 class="cd-title">Bachelor's Degree in Computer Science</h3>
+            <p class="cd-inst">IPB University · Bogor · GPA 3.48 / 4.00</p>
+            <p class="cd-desc">Relevant coursework: Database Systems, Data Mining, Algorithms, Data Structures, Operating Systems, Machine Learning, and Artificial Intelligence. Final project: YOLOv12 object detection on 1,200+ drone-captured images, reaching a mAP50-95 of 0.942.</p>
+          </article>
+          <article class="cd" data-i="6">
+            <p class="cd-year">Jan — Dec 2023 · Education</p>
+            <h3 class="cd-title">Human Resource Development Staff</h3>
+            <p class="cd-inst">HIMALKOM IPB · Computer Science student association</p>
+            <p class="cd-desc">Led talent scouting by organizing internal competitions to select top candidates for university-level competitions.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Summary cards for credentials without an uploaded document -->
+      <div class="paper-cards" hidden>
+        <div class="paper-card" id="card-ipb">
+          <span class="pc-kicker">Summary card</span>
+          <span class="pc-title">IPB University</span>
+          <span class="pc-sub">Bachelor's Degree in Computer Science</span>
+          <span class="pc-big">3.48<small>/ 4.00 GPA</small></span>
+          <span class="pc-row"><b>Years</b> Aug 2021 — Oct 2025</span>
+          <span class="pc-row"><b>Final project</b> YOLOv12 drone object detection · mAP50-95 0.942</span>
+          <span class="pc-note">Diploma and transcript available on request</span>
+        </div>
+        <div class="paper-card" id="card-himalkom">
+          <span class="pc-kicker">Summary card</span>
+          <span class="pc-title">HIMALKOM IPB</span>
+          <span class="pc-sub">Human Resource Development Staff</span>
+          <span class="pc-big">2023</span>
+          <span class="pc-row"><b>Role</b> Talent scouting through internal competitions</span>
+          <span class="pc-row"><b>Goal</b> Select top candidates for university-level competitions</span>
+          <span class="pc-note">Organization experience · IPB University</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <div class="anchor" id="contact"></div>
+    <section class="contact shutter layer" data-sec="contact" aria-labelledby="contact-h">
+      <div class="lamp" aria-hidden="true"></div>
+      <div class="contact-inner">
+        <h2 id="contact-h">Got a role in mind? <span class="marker-hl">Let's talk.</span></h2>
+        <p class="contact-sub">I'm open to full-time Data Analyst and Data Science opportunities. The fastest way to reach me is by email.</p>
+        <div class="mail-row">
+          <a class="mail-link" href="mailto:naufalakbar06@gmail.com">naufalakbar06@gmail.com</a>
+          <button class="btn btn-paper btn-sm" type="button" id="copyEmail" data-email="naufalakbar06@gmail.com"><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Copy email</span></button>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-green" href="https://linkedin.com/in/naufal-rahardjo" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-in"/></svg><span>LinkedIn</span></a>
+          <a class="btn btn-cyan" href="https://github.com/rahbarfal" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-gh"/></svg><span>GitHub</span></a>
+          <a class="btn btn-yellow" href="assets/docs/CV_Naufal_Akbar_Rahardjo_Data_Analyst.pdf" download><svg aria-hidden="true"><use href="#i-dl"/></svg><span>Download CV (PDF)</span></a>
+        </div>
+      </div>
+
+      <!-- Tag wall -->
+      <div class="tagwall">
+        <div class="tagwall-head">
+          <h3>Leave your tag</h3>
+          <p>Grab a can and spray the wall. Save it if you like it.</p>
+        </div>
+        <div class="tagwall-board">
+          <canvas id="tagCanvas" aria-label="Spray paint canvas"></canvas>
+          <span class="tagwall-hint" id="tagHint" aria-hidden="true">Spray here</span>
+        </div>
+        <div class="tagwall-tools" role="group" aria-label="Spray tools">
+          <div class="swatches" role="radiogroup" aria-label="Color">
+            <button type="button" class="swatch" style="--c:#e9ff2e" aria-label="Yellow" aria-checked="true" role="radio"></button>
+            <button type="button" class="swatch" style="--c:#ff3d8b" aria-label="Pink" aria-checked="false" role="radio"></button>
+            <button type="button" class="swatch" style="--c:#22d3ff" aria-label="Cyan" aria-checked="false" role="radio"></button>
+            <button type="button" class="swatch" style="--c:#3dff8a" aria-label="Green" aria-checked="false" role="radio"></button>
+            <button type="button" class="swatch" style="--c:#ff3b24" aria-label="Red" aria-checked="false" role="radio"></button>
+            <button type="button" class="swatch" style="--c:#f4f1ea" aria-label="White" aria-checked="false" role="radio"></button>
+          </div>
+          <div class="nozzles" role="radiogroup" aria-label="Nozzle">
+            <button type="button" class="nozzle" data-n="skinny" role="radio" aria-checked="false">Skinny</button>
+            <button type="button" class="nozzle" data-n="fat" role="radio" aria-checked="true">Fat</button>
+            <button type="button" class="nozzle" data-n="splatter" role="radio" aria-checked="false">Splatter</button>
+          </div>
+          <div class="tag-actions">
+            <button type="button" class="btn btn-ghost btn-sm" id="tagClear"><svg aria-hidden="true"><use href="#i-trash"/></svg><span>Buff</span></button>
+            <button type="button" class="btn btn-pink btn-sm" id="tagSave"><svg aria-hidden="true"><use href="#i-dl"/></svg><span>Save PNG</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <a class="logo footer-logo" href="#home">Naufal</a>
+        <p class="footer-tag">Data analysis with street-level clarity. From messy records to decisions that stick.</p>
+      </div>
+      <nav aria-label="Setlist">
+        <p class="footer-h">Setlist</p>
+        <ul class="footer-list">
+          <li><a href="#about">About</a></li><li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li><li><a href="#credentials">Credentials</a></li><li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="footer-h">Let's talk</p>
+        <ul class="footer-list">
+          <li><a href="mailto:naufalakbar06@gmail.com">naufalakbar06@gmail.com</a></li>
+          <li><a href="https://linkedin.com/in/naufal-rahardjo" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/rahbarfal" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="assets/docs/CV_Naufal_Akbar_Rahardjo_Data_Analyst.pdf" download>Resume (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Naufal Akbar Rahardjo · Jakarta, Indonesia</span>
+      <a href="#home" class="back-top"><span>Back to top</span><svg aria-hidden="true"><use href="#i-up"/></svg></a>
+    </div>
+  </footer>
+
+  <!-- Now playing pill -->
+  <button class="now-playing hide" type="button" aria-controls="drawer" aria-expanded="false">
+    <span class="np-disc" aria-hidden="true"></span>
+    <span class="np-text"><small>Now playing</small><span id="npName">Intro · Home</span></span>
+    <svg aria-hidden="true"><use href="#i-menu"/></svg>
+  </button>
+
+  <!-- Drawer / setlist -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="drawer-shutter" role="dialog" aria-modal="true" aria-label="Setlist">
+      <div class="drawer-top">
+        <span class="logo">Naufal</span>
+        <button class="icon-btn drawer-close" type="button" aria-label="Close menu"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+      </div>
+      <p class="drawer-kicker">Setlist</p>
+      <ol class="setlist">
+        <li><a href="#home" data-sec="home"><span class="sl-code">Intro</span><span class="sl-t">Home</span><span class="sl-s">Hey yo, they call me Naufal</span></a></li>
+        <li><a href="#about" data-sec="about"><span class="sl-code">A1</span><span class="sl-t">About</span><span class="sl-s">The numbers and the why</span></a></li>
+        <li><a href="#experience" data-sec="experience"><span class="sl-code">A2</span><span class="sl-t">Experience</span><span class="sl-s">Three tracks, from BSI to Bank Mandiri</span></a></li>
+        <li><a href="#projects" data-sec="projects"><span class="sl-code">A3</span><span class="sl-t">Projects</span><span class="sl-s">Posters on the wall</span></a></li>
+        <li><a href="#skills" data-sec="skills"><span class="sl-code">B1</span><span class="sl-t">Skills</span><span class="sl-s">Stickers you can move</span></a></li>
+        <li><a href="#credentials" data-sec="credentials"><span class="sl-code">B2</span><span class="sl-t">Credentials</span><span class="sl-s">Mixtapes on the rack</span></a></li>
+        <li><a href="#contact" data-sec="contact"><span class="sl-code">Outro</span><span class="sl-t">Contact</span><span class="sl-s">Let's talk</span></a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Document lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <div class="lb-backdrop" data-lb-close></div>
+    <div class="lb-dialog" role="dialog" aria-modal="true" aria-labelledby="lbCap">
+      <figure class="lb-figure">
+        <span class="lb-media" id="lbMedia"></span>
+        <figcaption class="lb-cap" id="lbCap"></figcaption>
+      </figure>
+    </div>
+    <button class="lb-close" type="button" data-lb-close aria-label="Close document preview"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
