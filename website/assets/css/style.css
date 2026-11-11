@@ -1134,6 +1134,8 @@ svg { width: 1em; height: 1em; flex: none; }
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
   border-top: 1px solid rgba(255, 255, 255, .08); color: var(--fog-2); font-size: 14px;
 }
+.footer-credit a { color: var(--chalk); text-decoration: none; transition: color .2s ease; }
+.footer-credit a:hover { color: var(--yellow); text-decoration: underline wavy; text-underline-offset: 4px; }
 .back-top { display: inline-flex; align-items: center; gap: 6px; color: var(--chalk); text-decoration: none; font-weight: 700; }
 .back-top:hover { color: var(--yellow); }
 
