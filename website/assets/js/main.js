@@ -744,6 +744,46 @@
   }
 
   /* =========================================================
+     PROJECT SHEET — posters open a modal with screenshot + details
+     ========================================================= */
+  const pm = $('#projModal');
+  if (pm) {
+    const pmSheet = $('#pmSheet');
+    const pmBody = $('#pmBody');
+    const pmClose = $('.lb-close', pm);
+    let pmLast = null;
+    let pmTimer;
+    const openPm = (key, trigger) => {
+      const tpl = document.getElementById(`proj-${key}`);
+      if (!tpl) return;
+      clearTimeout(pmTimer);
+      pmBody.replaceChildren(tpl.content.cloneNode(true));
+      pmSheet.classList.toggle('is-portrait', tpl.dataset.layout === 'portrait');
+      pmLast = trigger;
+      pm.hidden = false;
+      pm.scrollTop = 0;
+      body.classList.add('locked');
+      void pm.offsetWidth;
+      pm.classList.add('open');
+      pmClose.focus({ preventScroll: true });
+    };
+    const closePm = () => {
+      if (pm.hidden) return;
+      pm.classList.remove('open');
+      body.classList.remove('locked');
+      pmTimer = setTimeout(() => { pm.hidden = true; pmBody.replaceChildren(); }, reduceMotion ? 0 : 320);
+      pmLast?.focus?.({ preventScroll: true });
+    };
+    $$('.bp-open[data-project]').forEach((btn) => btn.addEventListener('click', () => openPm(btn.dataset.project, btn)));
+    $$('[data-pm-close]', pm).forEach((el) => el.addEventListener('click', closePm));
+    document.addEventListener('keydown', (e) => {
+      if (pm.hidden) return;
+      if (e.key === 'Escape') closePm();
+      if (e.key === 'Tab') { e.preventDefault(); pmClose.focus(); } // only one control inside
+    });
+  }
+
+  /* =========================================================
      COPY EMAIL
      ========================================================= */
   const copyBtn = $('#copyEmail');

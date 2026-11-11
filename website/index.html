@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Bungee&family=Permanent+Marker&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261111" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -236,27 +236,31 @@
 
       <ul class="posters">
         <!-- TODO: add real links/screenshots when ready -->
-        <li class="bposter"><div class="bp">
+        <li class="bposter bposter-open"><div class="bp">
           <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
           <span class="bp-art art-yellow" aria-hidden="true">
             <span class="mock"><i style="height:45%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:85%"></i><i style="height:62%"></i><i style="height:92%"></i><i style="height:74%"></i></span>
             <span class="bp-num">GovHub</span>
-            <span class="go-sticker">Internal · on request</span>
+            <span class="go-sticker">Open project ↗</span>
           </span>
           <h3>GovHub — IFS Governance Hub</h3>
           <p>A Flask and PostgreSQL app that brings monitoring and digitized business flows into one place for Bank Mandiri's Infrastructure Governance team, with an ETL pipeline that turns audit documents into structured data for dashboards.</p>
           <span class="bp-meta">2026 · Bank Mandiri</span>
+          <span class="bp-cta" aria-hidden="true">See the dashboard →</span>
+          <button class="bp-open" type="button" data-project="govhub" aria-haspopup="dialog" aria-label="Open GovHub project details"></button>
         </div></li>
 
-        <li class="bposter"><div class="bp">
+        <li class="bposter bposter-open"><div class="bp">
           <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
           <span class="bp-art art-pink" aria-hidden="true">
             <span class="bp-num">0.942</span><span class="bp-unit">mAP50-95</span>
-            <span class="go-sticker">Case study soon</span>
+            <span class="go-sticker">Open project ↗</span>
           </span>
           <h3>Drone Object Detection with YOLOv12</h3>
-          <p>Curated and labeled 1,200+ drone-captured images and trained a YOLOv12 object detection model with high precision.</p>
+          <p>Curated and labeled 1,200+ Crazyflie drone images of chili plants and trained a YOLOv12 model to identify chili varieties.</p>
           <span class="bp-meta">2025 · Final project · IPB</span>
+          <span class="bp-cta" aria-hidden="true">See the thesis →</span>
+          <button class="bp-open" type="button" data-project="crazyflie" aria-haspopup="dialog" aria-label="Open drone object detection project details"></button>
         </div></li>
 
         <li class="bposter"><div class="bp">
@@ -310,8 +314,31 @@
     <!-- Companies band -->
     <section class="brands-band" aria-label="Where I've worked and studied">
       <div class="brands-track">
-        <ul class="brands-list"><li>Bank Mandiri</li><li>GoTo</li><li>Bank Syariah Indonesia</li><li>IPB University</li><li>Bangkit Academy</li><li>SahabatAI</li></ul>
-        <ul class="brands-list" aria-hidden="true"><li>Bank Mandiri</li><li>GoTo</li><li>Bank Syariah Indonesia</li><li>IPB University</li><li>Bangkit Academy</li><li>SahabatAI</li></ul>
+        <!-- each list holds the set twice so one list is wider than the screen; the second list makes the loop seamless -->
+        <ul class="brands-list">
+          <li><img class="logo-mandiri" src="assets/img/brands/bank-mandiri.png" alt="Bank Mandiri" width="412" height="120" decoding="async"></li>
+          <li><img class="logo-goto" src="assets/img/brands/goto.png" alt="GoTo Gojek Tokopedia" width="283" height="120" decoding="async"></li>
+          <li><img class="logo-bsi" src="assets/img/brands/bsi.png" alt="Bank Syariah Indonesia" width="433" height="120" decoding="async"></li>
+          <li><img class="logo-ipb" src="assets/img/brands/ipb-university.png" alt="IPB University" width="500" height="130" decoding="async"></li>
+          <li><img class="logo-bangkit" src="assets/img/brands/bangkit.png" alt="Bangkit Academy" width="600" height="141" decoding="async"></li>
+          <li aria-hidden="true"><img class="logo-mandiri" src="assets/img/brands/bank-mandiri.png" alt="" width="412" height="120" decoding="async"></li>
+          <li aria-hidden="true"><img class="logo-goto" src="assets/img/brands/goto.png" alt="" width="283" height="120" decoding="async"></li>
+          <li aria-hidden="true"><img class="logo-bsi" src="assets/img/brands/bsi.png" alt="" width="433" height="120" decoding="async"></li>
+          <li aria-hidden="true"><img class="logo-ipb" src="assets/img/brands/ipb-university.png" alt="" width="500" height="130" decoding="async"></li>
+          <li aria-hidden="true"><img class="logo-bangkit" src="assets/img/brands/bangkit.png" alt="" width="600" height="141" decoding="async"></li>
+        </ul>
+        <ul class="brands-list" aria-hidden="true">
+          <li><img class="logo-mandiri" src="assets/img/brands/bank-mandiri.png" alt="" width="412" height="120" decoding="async"></li>
+          <li><img class="logo-goto" src="assets/img/brands/goto.png" alt="" width="283" height="120" decoding="async"></li>
+          <li><img class="logo-bsi" src="assets/img/brands/bsi.png" alt="" width="433" height="120" decoding="async"></li>
+          <li><img class="logo-ipb" src="assets/img/brands/ipb-university.png" alt="" width="500" height="130" decoding="async"></li>
+          <li><img class="logo-bangkit" src="assets/img/brands/bangkit.png" alt="" width="600" height="141" decoding="async"></li>
+          <li><img class="logo-mandiri" src="assets/img/brands/bank-mandiri.png" alt="" width="412" height="120" decoding="async"></li>
+          <li><img class="logo-goto" src="assets/img/brands/goto.png" alt="" width="283" height="120" decoding="async"></li>
+          <li><img class="logo-bsi" src="assets/img/brands/bsi.png" alt="" width="433" height="120" decoding="async"></li>
+          <li><img class="logo-ipb" src="assets/img/brands/ipb-university.png" alt="" width="500" height="130" decoding="async"></li>
+          <li><img class="logo-bangkit" src="assets/img/brands/bangkit.png" alt="" width="600" height="141" decoding="async"></li>
+        </ul>
       </div>
     </section>
 
@@ -661,7 +688,53 @@
     <button class="lb-close" type="button" data-lb-close aria-label="Close document preview"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
   </div>
 
+  <!-- Project details (content lives in the templates below; edit text there) -->
+  <template id="proj-govhub">
+    <figure class="pm-shot">
+      <img src="assets/img/projects/govhub.jpg" alt="GovHub overview dashboard: audit totals and progress cards, audits per stage bar chart, monthly incoming audits, findings by status donut chart, and audit progress per PIC" width="1920" height="1080" decoding="async">
+    </figure>
+    <div class="pm-text">
+      <span class="pm-meta">2026 · Bank Mandiri · Internship</span>
+      <h3 class="pm-title" id="pmTitle">GovHub — IFS Governance Hub</h3>
+      <p>An internal web app I built for Bank Mandiri's Infrastructure Governance team. It replaces scattered spreadsheets and documents with one place to follow every audit from preliminary meeting to final report.</p>
+      <ul class="pm-points">
+        <li><b>Monitoring dashboard</b> with audit totals, progress per stage, monthly intake, findings status (open, closed, overdue) and progress per PIC.</li>
+        <li><b>Digitized workflows</b> for the audit list, findings, and data requests, with role-based access and an activity log.</li>
+        <li><b>ETL pipeline</b> that turns audit documents into structured data that feeds the dashboard.</li>
+      </ul>
+      <ul class="pm-tags" aria-label="Tools"><li>Python</li><li>Flask</li><li>PostgreSQL</li><li>ETL</li><li>Dashboarding</li></ul>
+      <p class="pm-note">Internal tool, so there is no public demo. Personal names are redacted in the screenshot.</p>
+    </div>
+  </template>
+
+  <template id="proj-crazyflie" data-layout="portrait">
+    <figure class="pm-shot">
+      <img src="assets/img/projects/crazyflie-thesis.jpg" alt="Thesis cover: Pengembangan Model Identifikasi Varietas Tanaman Cabai Berbasis YOLOv12 Menggunakan Dataset Citra Drone Crazyflie, by Naufal Akbar Rahardjo, IPB University, 2025" width="1124" height="1600" decoding="async">
+    </figure>
+    <div class="pm-text">
+      <span class="pm-meta">2025 · Undergraduate thesis · IPB University</span>
+      <h3 class="pm-title" id="pmTitle">Chili Variety Identification with YOLOv12</h3>
+      <p class="pm-sub">Original title: <i>Pengembangan Model Identifikasi Varietas Tanaman Cabai Berbasis YOLOv12 Menggunakan Dataset Citra Drone Crazyflie</i></p>
+      <p>My final project for the Computer Science program. I built an object detection model that identifies chili plant varieties from images captured by a Crazyflie nano drone.</p>
+      <ul class="pm-points">
+        <li><b>Dataset:</b> curated and labeled 1,200+ drone-captured images.</li>
+        <li><b>Model:</b> trained and evaluated YOLOv12 for variety detection.</li>
+        <li><b>Result:</b> mAP50-95 of <b>0.942</b>.</li>
+      </ul>
+      <ul class="pm-tags" aria-label="Tools"><li>Python</li><li>YOLOv12</li><li>Computer Vision</li><li>Data Labeling</li><li>Crazyflie</li></ul>
+    </div>
+  </template>
+
+  <div class="pmodal" id="projModal" hidden>
+    <div class="pm-backdrop" data-pm-close></div>
+    <article class="pm-sheet" id="pmSheet" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+      <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+      <div class="pm-body" id="pmBody"></div>
+    </article>
+    <button class="lb-close" type="button" data-pm-close aria-label="Close project details"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/main.js?v=20261111" defer></script>
 </body>
 </html>

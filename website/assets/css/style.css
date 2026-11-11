@@ -674,6 +674,19 @@ svg { width: 1em; height: 1em; flex: none; }
 .bposter-empty .bp p, .bposter-empty .bp-meta { color: var(--fog-2); }
 .bposter-empty .bp-art { background: transparent; border: 2px dashed rgba(244, 241, 234, .2); color: var(--fog-2); }
 .bposter-empty .bp-num { text-shadow: none; }
+/* Posters that open a project sheet: the whole card is one button */
+.bp-open {
+  position: absolute; inset: 0; z-index: 3;
+  border: 0; background: transparent; cursor: pointer;
+}
+.bp-open:focus-visible { outline-offset: 6px; }
+.bp-cta {
+  display: inline-block; margin: 12px 4px 0;
+  padding: 5px 10px 4px; border: 2px solid var(--ink); border-radius: 999px;
+  font-family: var(--f-sign); font-size: 12px; line-height: 1;
+  transition: background .2s, transform .35s var(--ease-slap);
+}
+.bposter-open:hover .bp-cta, .bposter-open:focus-within .bp-cta { background: var(--yellow); transform: rotate(-3deg); }
 
 /* Brands band */
 .brands-band {
@@ -687,11 +700,17 @@ svg { width: 1em; height: 1em; flex: none; }
 .brands-track { display: flex; width: max-content; animation: marquee 44s linear infinite reverse; }
 .brands-list { display: flex; }
 .brands-list li {
-  display: flex; align-items: center; gap: 40px; padding: 18px 20px 18px 40px;
-  color: var(--ink); white-space: nowrap;
-  font-family: var(--f-sign); font-size: clamp(18px, 2vw, 26px);
+  display: flex; align-items: center; gap: clamp(32px, 4vw, 56px); padding: 16px 0 16px clamp(32px, 4vw, 56px);
+  white-space: nowrap;
 }
-.brands-list li::after { content: "✶"; color: var(--red); font-size: .9em; }
+.brands-list li::after { content: "✶"; color: var(--red); font-size: clamp(18px, 2vw, 24px); }
+/* logos have different proportions, so each gets an optically matched height */
+.brands-list img { display: block; width: auto; height: var(--lh, 40px); }
+.brands-list .logo-mandiri { --lh: clamp(30px, 3.2vw, 42px); }
+.brands-list .logo-goto { --lh: clamp(28px, 3vw, 40px); }
+.brands-list .logo-bsi { --lh: clamp(30px, 3.2vw, 42px); }
+.brands-list .logo-ipb { --lh: clamp(32px, 3.4vw, 44px); }
+.brands-list .logo-bangkit { --lh: clamp(22px, 2.4vw, 32px); }
 
 /* =========================================================
    SKILLS — draggable stickers
@@ -1036,6 +1055,58 @@ svg { width: 1em; height: 1em; flex: none; }
 }
 .lightbox.open .lb-close { opacity: 1; transform: rotate(-8deg); }
 .lightbox.open .lb-close:hover { transform: rotate(0) scale(1.1); }
+
+/* =========================================================
+   PROJECT SHEET (modal)
+   ========================================================= */
+.pmodal { position: fixed; inset: 0; z-index: 140; display: flex; padding: 80px 16px 28px; overflow-y: auto; overscroll-behavior: contain; }
+.pmodal[hidden] { display: none; }
+.pm-backdrop {
+  position: fixed; inset: 0; cursor: zoom-out;
+  background: rgba(5, 6, 10, .84);
+  -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px);
+  opacity: 0; transition: opacity .3s;
+}
+.pmodal.open .pm-backdrop { opacity: 1; }
+.pm-sheet {
+  position: relative; z-index: 1; margin: auto; width: min(960px, 100%);
+  padding: 12px; color: var(--ink);
+  background: radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, .7), transparent 55%), var(--paper);
+  box-shadow: 0 40px 90px -20px #000;
+  opacity: 0; transform: translateY(34px) rotate(-2deg) scale(.9);
+  transition: transform .55s var(--ease-slap), opacity .25s;
+}
+.pmodal.open .pm-sheet { opacity: 1; transform: none; }
+.pm-sheet .tape-l { top: -12px; left: -22px; width: 110px; transform: rotate(-30deg); }
+.pm-sheet .tape-r { top: -12px; right: -22px; width: 110px; transform: rotate(30deg); }
+.pm-sheet:focus { outline: none; }
+.pm-body { display: grid; gap: 18px 28px; }
+.pm-shot { margin: 0; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); }
+.pm-shot img { display: block; width: 100%; height: auto; }
+.pm-text { padding: 2px 8px 10px; }
+.pm-meta { display: block; color: var(--paper-meta); font-weight: 700; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.pm-title { margin-top: 8px; font-family: var(--f-sign); font-weight: 400; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.08; }
+.pm-text p { margin-top: 12px; color: var(--paper-ink); font-size: 16px; line-height: 1.55; }
+.pm-text p.pm-sub { margin-top: 8px; color: var(--paper-meta); font-size: 14px; line-height: 1.45; }
+.pm-points { margin-top: 14px; display: grid; gap: 8px; }
+.pm-points li { position: relative; padding-left: 20px; color: var(--paper-ink); font-size: 15px; line-height: 1.5; }
+.pm-points li::before { content: "✶"; position: absolute; left: 0; top: 0; color: var(--red); }
+.pm-points b { color: var(--ink); }
+.pm-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+.pm-tags li { padding: 5px 10px 4px; border: 2px solid var(--ink); border-radius: 999px; font-family: var(--f-sign); font-size: 12px; line-height: 1; }
+.pm-tags li:nth-child(3n+1) { background: var(--yellow); }
+.pm-tags li:nth-child(3n+2) { background: var(--cyan); }
+.pm-tags li:nth-child(3n) { background: var(--pink); }
+.pm-text p.pm-note { margin-top: 16px; font-family: var(--f-tag); font-size: 17px; color: var(--paper-meta); }
+/* Portrait images (e.g. a thesis cover) sit beside the text on wider screens */
+.pm-sheet.is-portrait { width: min(900px, 100%); }
+.pm-sheet.is-portrait .pm-shot { justify-self: center; max-width: min(380px, 68%); }
+@media (min-width: 760px) {
+  .pm-sheet.is-portrait .pm-body { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; }
+  .pm-sheet.is-portrait .pm-shot { max-width: none; }
+}
+.pmodal.open .lb-close { opacity: 1; transform: rotate(-8deg); }
+.pmodal.open .lb-close:hover { transform: rotate(0) scale(1.1); }
 .js .cd:not(.on) { display: none; }
 .cd { animation: fadeUp .5s var(--ease-out); }
 .cd + .cd { margin-top: 28px; }
