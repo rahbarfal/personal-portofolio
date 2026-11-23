@@ -791,31 +791,101 @@ svg { width: 1em; height: 1em; flex: none; }
 .rack { grid-area: rack; min-width: 0; }
 .tape-detail { grid-area: detail; min-width: 0; }
 
-/* legend */
-.rack-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 6px; }
-.lg { display: inline-flex; align-items: center; gap: 8px; color: var(--fog); font-weight: 800; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-.lg::before { content: ""; width: 20px; height: 20px; border-radius: 3px; border: 2px solid rgba(255, 255, 255, .7); }
-.lg-cert::before { background: radial-gradient(circle, #e9ff2e 0 22%, transparent 24% 40%, #e9ff2e 42% 50%, transparent 52%), #111318; }
-.lg-exp::before { background: radial-gradient(circle, #0a0a0c 0 30%, transparent 32%), #c49a5e; }
-.lg-edu::before { background: repeating-linear-gradient(180deg, #fff 0 3px, #9db4ff 3px 4px); }
-
-/* shelf + rail */
-.rack-shelf { position: relative; display: flex; align-items: center; gap: 10px; }
-.lp-rail {
-  --lw: clamp(150px, 13vw, 178px);
-  flex: 1; min-width: 0;
-  display: flex; align-items: flex-end; gap: 22px;
-  padding: 84px 14px 30px;
-  overflow-x: auto; overflow-y: hidden;
-  scroll-snap-type: x mandatory; scroll-padding-inline: 14px;
-  scrollbar-width: none; cursor: grab;
-  background: linear-gradient(180deg, transparent calc(100% - 20px), #a2672f calc(100% - 20px), #c07f43 calc(100% - 16px), #6f4320 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 22px, #000 calc(100% - 22px), transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 22px, #000 calc(100% - 22px), transparent 100%);
+/* crate divider tabs: one per group, the active one stands tall */
+.rack { --cc: var(--yellow); }
+.rack[data-group="data"] { --cc: var(--cyan); }
+.rack[data-group="dev"] { --cc: var(--pink); }
+.rack[data-group="work"] { --cc: #e2b578; }
+.rack[data-group="edu"] { --cc: var(--paper); }
+.crate-tabs {
+  position: relative; z-index: 3;
+  display: flex; align-items: flex-end; gap: 6px;
+  padding: 10px 10px 0;
+  overflow-x: auto; scrollbar-width: none;
 }
-.lp-rail::-webkit-scrollbar { display: none; }
-.lp-rail.grabbing { cursor: grabbing; scroll-snap-type: none; }
-.lp-rail.grabbing .lp { pointer-events: none; }
+.crate-tabs::-webkit-scrollbar { display: none; }
+.ctab {
+  --c: var(--yellow);
+  flex: none; display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 14px 13px; border: 0; border-radius: 12px 12px 3px 3px;
+  background: var(--c); color: var(--ink); cursor: pointer;
+  font-family: var(--f-sign); font-size: 13px; line-height: 1; letter-spacing: .03em;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .35), inset 0 -3px 0 rgba(0, 0, 0, .18), var(--sticker-shadow);
+  opacity: .5; transform: translateY(7px) rotate(var(--tr, 0deg)); filter: saturate(.6);
+  transition: transform .35s var(--ease-slap), opacity .2s, filter .2s;
+}
+.ctab:nth-child(odd) { --tr: -1.5deg; }
+.ctab:nth-child(even) { --tr: 1.2deg; }
+.ctab:hover { opacity: .85; filter: none; transform: translateY(2px) rotate(var(--tr)); }
+.ctab[aria-selected="true"] { opacity: 1; filter: none; transform: translateY(-2px) rotate(0); }
+.ctab-n {
+  min-width: 1.7em; padding: 4px 6px 3px; border-radius: 999px;
+  background: rgba(11, 13, 18, .86); color: var(--c);
+  font-family: var(--f-body); font-weight: 900; font-size: 11px; text-align: center;
+}
+.ctab-ml { --c: var(--yellow); }
+.ctab-data { --c: var(--cyan); }
+.ctab-dev { --c: var(--pink); }
+.ctab-work { --c: #e2b578; }
+.ctab-edu { --c: var(--paper); }
+
+/* the crate: back wall, a fanned row of records, front boards over their bottoms */
+.crate {
+  --lw: clamp(150px, 13vw, 178px);
+  --wall: clamp(14px, 2vw, 24px);
+  position: relative;
+}
+.crate::before { /* back wall + inside of the box */
+  content: ""; position: absolute; inset: 0; z-index: 0; /* full height: the wall reaches up to the divider tabs */
+  border-radius: 6px 6px 0 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, .25), rgba(0, 0, 0, .7)),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .1) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(180deg, #6b4423 0 calc(var(--lw) * .3 - 3px), #2a180a calc(var(--lw) * .3 - 3px) calc(var(--lw) * .3));
+  box-shadow: inset 0 0 0 3px #2a180a, inset 0 3px 0 4px var(--cc);
+  transition: box-shadow .3s;
+}
+.lp-rail {
+  position: relative; z-index: 1;
+  display: grid; align-items: end; justify-content: center;
+  /* every record but the last gets a column narrower than itself, so the row fans out
+     with overlaps at any width and never needs scrolling (--n1 = records - 1, set in JS) */
+  grid-template-columns: repeat(var(--n1, 5), minmax(0, calc(var(--lw) * .62))) var(--lw);
+  padding: calc(var(--lw) * .7) var(--wall) 12px;
+}
+.lp-rail.dealt .lp:not([hidden]) { animation: dealIn .55s var(--ease-out) backwards; animation-delay: calc(var(--k, 0) * 55ms); }
+@keyframes dealIn { from { opacity: 0; translate: 0 -46px; } }
+.crate-front {
+  position: absolute; left: -4px; right: -4px; bottom: 0; z-index: 2;
+  height: calc(var(--lw) * .26 + 12px);
+  display: grid; place-items: center;
+  border-radius: 4px 4px 12px 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .14), transparent 26%, rgba(0, 0, 0, .38)),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .07) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #b97c40 0 47%, #3d240e 47% 53%, #a96e35 53%);
+  box-shadow: inset 0 2px 0 #dca266, 0 16px 26px -12px rgba(0, 0, 0, .9);
+  pointer-events: none;
+}
+.crate-front::before, .crate-front::after { /* corner brackets */
+  content: ""; position: absolute; top: 0; bottom: 0; width: 18px;
+  background: radial-gradient(circle at 50% 22%, #e6e9ef 0 2px, transparent 3px), radial-gradient(circle at 50% 78%, #e6e9ef 0 2px, transparent 3px), linear-gradient(180deg, #8b93a3, #4b5261);
+}
+.crate-front::before { left: 0; border-radius: 4px 0 0 12px; }
+.crate-front::after { right: 0; border-radius: 0 4px 12px 0; }
+.crate-stencil {
+  padding: 0 1.2em; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  font-family: var(--f-sign); font-size: clamp(13px, 1.5vw, 19px); letter-spacing: .22em; text-transform: uppercase;
+  color: var(--cc); opacity: .92; text-shadow: 0 1px 0 rgba(0, 0, 0, .45);
+  transform: rotate(-1.5deg);
+}
+.crate-foot { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.crate-now {
+  flex: 1; min-width: 0; display: flex; align-items: baseline; justify-content: center; gap: 12px;
+  color: var(--fog); font-weight: 800; font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+}
+.crate-now span { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.crate-now b { flex: none; font-family: var(--f-sign); font-weight: 400; color: var(--cc); }
 .rack-nav {
   flex: none; display: grid; place-items: center;
   width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
@@ -823,39 +893,32 @@ svg { width: 1em; height: 1em; flex: none; }
   font-size: 20px;
   transition: border-color .2s, color .2s, transform .2s var(--ease-out);
 }
-.rack-nav:hover { border-color: var(--yellow); color: var(--yellow); }
+.rack-nav:hover { border-color: var(--cc); color: var(--cc); }
 .rack-nav:active { transform: scale(.92); }
 .rack-prev svg { transform: scaleX(-1); }
-.rack-progress { height: 4px; margin: 6px 54px 0; border-radius: 4px; background: var(--steel-edge); overflow: hidden; }
-.rack-progress i { display: block; height: 100%; width: var(--w, 30%); margin-left: var(--l, 0%); border-radius: 4px; background: var(--yellow); transition: margin .15s linear; }
-
-/* group tabs between sleeves */
-.rail-tab {
-  flex: none; align-self: flex-end; height: var(--lw); margin-bottom: 4px;
-  display: grid; place-items: center; padding: 8px 5px; border-radius: 6px;
-  writing-mode: vertical-rl; transform: rotate(180deg);
-  font-family: var(--f-sign); font-size: 12px; letter-spacing: .14em; color: var(--ink);
-  box-shadow: var(--sticker-shadow);
-}
-.tab-cert { background: var(--yellow); }
-.tab-exp { background: #c49a5e; }
-.tab-edu { background: var(--paper); }
 
 /* record in its sleeve */
 .lp {
-  position: relative; flex: none; width: var(--lw); height: var(--lw);
+  position: relative; grid-row: 1; justify-self: start;
+  width: var(--lw); height: var(--lw);
   padding: 0; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer;
   font-size: calc(var(--lw) / 17);
-  scroll-snap-align: center;
+  transform-origin: 50% 100%;
   transform: rotate(var(--tr, 0deg));
-  filter: saturate(.7) brightness(.8);
+  filter: saturate(.7) brightness(.78);
   transition: transform .45s var(--ease-slap), filter .3s;
 }
-.lp:nth-of-type(3n+1) { --tr: -1.4deg; }
-.lp:nth-of-type(3n+2) { --tr: 1deg; }
-.lp:nth-of-type(3n) { --tr: -.4deg; }
-.lp:hover { transform: translateY(-6px) rotate(0); filter: none; }
-.lp[aria-selected="true"] { z-index: 2; transform: rotate(0); filter: none; }
+.lp[hidden] { display: none; }
+.lp:nth-of-type(3n+1) { --tr: -2.2deg; }
+.lp:nth-of-type(3n+2) { --tr: 1.4deg; }
+.lp:nth-of-type(3n) { --tr: -.6deg; }
+.lp:hover { z-index: 3; transform: translateY(-12%) rotate(0); filter: none; }
+.lp[aria-selected="true"] { z-index: 4; transform: translateY(-30%) rotate(0); filter: none; }
+/* inside the crate only the top-left corner of most sleeves shows: lead with the side code */
+.lp-rail .lp-kind { display: none; }
+.lp-rail .lp-side { left: .9em; right: auto; padding: .2em .35em; border-radius: .2em; background: rgba(11, 13, 18, .55); color: var(--lab); }
+.lp-rail .lp-edu .lp-side { left: 2em; background: rgba(29, 47, 143, .12); color: #1d2f8f; }
+.lp-rail .lp-exp .lp-side { background: rgba(11, 13, 18, .14); color: var(--ink); }
 .lp:focus-visible { outline-offset: 6px; }
 .lp-vinyl {
   position: absolute; left: 6%; top: 6%; z-index: 0; width: 88%; aspect-ratio: 1; border-radius: 50%;
@@ -1351,9 +1414,10 @@ svg { width: 1em; height: 1em; flex: none; }
   .wall-tag { font-size: clamp(2.4rem, 11vw, 3.4rem); }
   .wall-tag-soft { right: auto; left: 4%; top: calc(71% + 18px); }
   .sticker.round { width: 9.4em; height: 9.4em; }
-  .lp-rail { --lw: 150px; padding-inline: 10px; }
-  .rack-nav { display: none; }
-  .rack-progress { margin-inline: 10px; }
+  .crate { --lw: 140px; --wall: 10px; }
+  .crate-tabs { padding-inline: 4px; }
+  .ctab { padding: 10px 11px 12px; font-size: 12px; }
+  .crate-now { font-size: 12px; gap: 8px; }
   .setlist a { grid-template-columns: 56px minmax(0, 1fr); }
   .sl-s { grid-column: 2; text-align: left; }
   .tag-actions { margin-left: 0; }

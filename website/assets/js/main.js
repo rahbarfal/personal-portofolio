@@ -38,15 +38,25 @@
     startHero();
   } else {
     body.classList.add('locked');
+    // Always land on the hero (name + photo): stop the browser restoring an old
+    // scroll position behind the shutter. 'instant' overrides html's smooth scrolling.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    toTop();
     let opened = false;
     const openDoor = () => {
       if (opened) return;
       opened = true;
       door.classList.add('up');
-      body.classList.remove('locked');
       try { sessionStorage.setItem('door', '1'); } catch (e) { /* ignore */ }
       setTimeout(startHero, 450);
-      setTimeout(() => door.classList.add('gone'), 1200);
+      // Keep the page locked while the shutter lifts, so the wheel/trackpad momentum
+      // or key press that opened it can't scroll the page down. Unlock at the top.
+      setTimeout(() => {
+        toTop();
+        body.classList.remove('locked');
+        door.classList.add('gone');
+      }, 1200);
       ['click', 'wheel', 'touchmove'].forEach((t) => door.removeEventListener(t, openDoor));
       window.removeEventListener('keydown', openDoor);
     };
@@ -573,7 +583,17 @@
     const coverFront = $('#coverFront');
     const docFrame = $('#docFrame');
     const docMedia = $('#docMedia');
-    const bar = $('#rackBar');
+    const rack = $('.rack');
+    const tabList = $('.crate-tabs');
+    const tabs = $$('[role="tab"]', tabList);
+    const panel = $('#cratePanel');
+    const crateLabel = $('#crateLabel');
+    const crateNow = $('#crateNow');
+    const crateCount = $('#crateCount');
+    // record indices per crate, in rack order
+    const groupIdx = {};
+    items.forEach((t, i) => (groupIdx[t.dataset.group] ||= []).push(i));
+    let group = '';
     const wait = (ms) => new Promise((r) => setTimeout(r, ms));
     let cur = 0;
     let swapToken = 0;
@@ -633,34 +653,74 @@
       openAlbum();
     };
 
-    const centerItem = (t, smooth = true) => {
-      const r = rail.getBoundingClientRect();
-      const tr = t.getBoundingClientRect();
-      rail.scrollBy({ left: tr.left + tr.width / 2 - (r.left + r.width / 2), behavior: smooth && !reduceMotion ? 'smooth' : 'auto' });
+    // Swap which crate is on show: tabs, visible records, stencil, fan width
+    const showGroup = (g, deal) => {
+      if (g === group) return;
+      group = g;
+      const tab = tabs.find((t) => t.dataset.group === g);
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+      });
+      panel.setAttribute('aria-labelledby', tab.id);
+      rack.dataset.group = g;
+      crateLabel.textContent = $('.ctab-t', tab).textContent;
+      items.forEach((t) => { t.hidden = t.dataset.group !== g; });
+      groupIdx[g].forEach((i, k) => items[i].style.setProperty('--k', k));
+      rail.style.setProperty('--n1', Math.max(1, groupIdx[g].length - 1));
+      // keep the active divider in view when the tab row scrolls (phones)
+      tabList.scrollTo({ left: tab.offsetLeft - (tabList.clientWidth - tab.offsetWidth) / 2, behavior: deal && !reduceMotion ? 'smooth' : 'auto' });
+      if (deal && !reduceMotion) {
+        rail.classList.remove('dealt');
+        void rail.offsetWidth; // restart the deal-in animation
+        rail.classList.add('dealt');
+      }
     };
 
     const select = (i, { focus = false, animate = true } = {}) => {
       i = clamp(i, 0, items.length - 1);
       const changed = i !== cur;
       cur = i;
+      showGroup(items[i].dataset.group, animate);
       items.forEach((t, j) => {
         t.setAttribute('aria-selected', String(j === i));
         t.tabIndex = j === i ? 0 : -1;
       });
       cds.forEach((c, j) => c.classList.toggle('on', j === i));
+      const ids = groupIdx[group];
+      crateNow.textContent = `${$('.lp-side', items[i]).textContent} · ${$('.lp-title', items[i]).textContent}`;
+      crateCount.textContent = `${ids.indexOf(i) + 1} / ${ids.length}`;
       if (focus) items[i].focus({ preventScroll: true });
-      centerItem(items[i], animate);
       if (changed || !animate) showDoc(i, animate && changed);
     };
 
     items.forEach((t, i) => t.addEventListener('click', () => select(i)));
-    $('.rack-prev').addEventListener('click', () => select(cur - 1));
-    $('.rack-next').addEventListener('click', () => select(cur + 1));
+    // Prev/next flip through every record, crossing into the neighbouring crate at the ends
+    const step = (d) => select((cur + d + items.length) % items.length);
+    $('.rack-prev').addEventListener('click', () => step(-1));
+    $('.rack-next').addEventListener('click', () => step(1));
+    // Arrow keys inside a crate stay inside that crate
     rail.addEventListener('keydown', (e) => {
-      const map = { ArrowRight: cur + 1, ArrowDown: cur + 1, ArrowLeft: cur - 1, ArrowUp: cur - 1, Home: 0, End: items.length - 1 };
+      const ids = groupIdx[group];
+      const k = ids.indexOf(cur);
+      const map = { ArrowRight: k + 1, ArrowDown: k + 1, ArrowLeft: k - 1, ArrowUp: k - 1, Home: 0, End: ids.length - 1 };
       if (!(e.key in map)) return;
       e.preventDefault();
-      select(map[e.key], { focus: true });
+      select(ids[clamp(map[e.key], 0, ids.length - 1)], { focus: true });
+    });
+    // Divider tabs: click opens a crate at its first record; arrows move between tabs
+    tabs.forEach((t) => t.addEventListener('click', () => {
+      if (t.dataset.group !== group) select(groupIdx[t.dataset.group][0]);
+    }));
+    tabList.addEventListener('keydown', (e) => {
+      const k = tabs.indexOf(document.activeElement);
+      const map = { ArrowRight: k + 1, ArrowLeft: k - 1, Home: 0, End: tabs.length - 1 };
+      if (k < 0 || !(e.key in map)) return;
+      e.preventDefault();
+      const t = tabs[(map[e.key] + tabs.length) % tabs.length];
+      t.focus();
+      t.click();
     });
     // A closed cover can be clicked to open it
     cover.addEventListener('click', () => { albumLive = true; openAlbum(); });
@@ -675,41 +735,7 @@
       albumObs.observe(album);
     }
 
-    // Progress bar under the rack
-    const updateBar = () => {
-      const max = rail.scrollWidth;
-      bar.style.setProperty('--w', `${(rail.clientWidth / max) * 100}%`);
-      bar.style.setProperty('--l', `${(rail.scrollLeft / max) * 100}%`);
-    };
-    rail.addEventListener('scroll', updateBar, { passive: true });
-    window.addEventListener('resize', updateBar);
-
-    // Mouse drag to slide the rack (touch uses native swipe)
-    let dragX = 0;
-    let dragLeft = 0;
-    let dragging = false;
-    let moved = false;
-    rail.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      dragging = true;
-      moved = false;
-      dragX = e.clientX;
-      dragLeft = rail.scrollLeft;
-    });
-    window.addEventListener('pointermove', (e) => {
-      if (!dragging) return;
-      const dx = e.clientX - dragX;
-      if (!moved && Math.abs(dx) > 6) { moved = true; rail.classList.add('grabbing'); }
-      if (moved) rail.scrollLeft = dragLeft - dx;
-    });
-    window.addEventListener('pointerup', () => {
-      if (!dragging) return;
-      dragging = false;
-      setTimeout(() => rail.classList.remove('grabbing'), 0);
-    });
-
     select(0, { animate: false });
-    updateBar();
 
     /* ---------- Lightbox ---------- */
     const lb = $('#lightbox');

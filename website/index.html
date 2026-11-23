@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Bungee&family=Permanent+Marker&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261111" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261123c" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -388,61 +388,111 @@
       <div class="ghost" aria-hidden="true" data-drift>Credentials Credentials</div>
       <div class="section-head">
         <h2 id="cred-h">Credentials</h2>
-        <p><em>Diggin' in the crates.</em> Certificates, internship letters and degrees, one record each. Pull a record from the rack and its gatefold opens to show the paperwork inside. <strong>Tap the document to see it up close.</strong></p>
+        <p><em>Diggin' in the crates.</em> Certificates, internship letters and degrees, one record each, sorted into crates. Pick a crate, pull a record, and its gatefold opens to show the paperwork inside. <strong>Tap the document to see it up close.</strong></p>
       </div>
 
       <div class="lps-layout">
         <div class="rack">
-          <div class="rack-legend" aria-hidden="true">
-            <span class="lg lg-cert">Certifications</span>
-            <span class="lg lg-exp">Experience</span>
-            <span class="lg lg-edu">Education</span>
+          <div class="crate-tabs" role="tablist" aria-label="Credential crates">
+            <button class="ctab ctab-ml" type="button" role="tab" id="ctab-ml" data-group="ml" aria-selected="true" aria-controls="cratePanel"><span class="ctab-t">ML &amp; AI</span><span class="ctab-n">6</span></button>
+            <button class="ctab ctab-data" type="button" role="tab" id="ctab-data" data-group="data" aria-selected="false" aria-controls="cratePanel" tabindex="-1"><span class="ctab-t">Data</span><span class="ctab-n">4</span></button>
+            <button class="ctab ctab-dev" type="button" role="tab" id="ctab-dev" data-group="dev" aria-selected="false" aria-controls="cratePanel" tabindex="-1"><span class="ctab-t">Dev &amp; Lang</span><span class="ctab-n">3</span></button>
+            <button class="ctab ctab-work" type="button" role="tab" id="ctab-work" data-group="work" aria-selected="false" aria-controls="cratePanel" tabindex="-1"><span class="ctab-t">Work</span><span class="ctab-n">3</span></button>
+            <button class="ctab ctab-edu" type="button" role="tab" id="ctab-edu" data-group="edu" aria-selected="false" aria-controls="cratePanel" tabindex="-1"><span class="ctab-t">School</span><span class="ctab-n">2</span></button>
           </div>
 
-          <div class="rack-shelf">
-            <button class="rack-nav rack-prev" type="button" aria-label="Previous record"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
-            <div class="lp-rail" id="lpRail" role="listbox" aria-label="Credentials" aria-orientation="horizontal">
-              <span class="rail-tab tab-cert" aria-hidden="true">Certs</span>
-              <button class="lp lp-cert" type="button" role="option" aria-selected="true" data-i="0" style="--lab:#e9ff2e" data-doc="assets/img/credentials/stanford-ml.jpg" data-alt="Machine Learning Specialization certificate from Stanford Online and DeepLearning.AI on Coursera, July 2024">
+          <div class="crate" id="cratePanel" role="tabpanel" aria-labelledby="ctab-ml">
+            <div class="lp-rail" id="lpRail" role="listbox" aria-label="Records in this crate" aria-orientation="horizontal">
+              <!-- ML & AI -->
+              <button class="lp lp-cert" type="button" role="option" aria-selected="true" data-i="0" data-group="ml" style="--lab:#e9ff2e" data-doc="assets/img/credentials/stanford-ml.jpg" data-alt="Machine Learning Specialization certificate from Stanford Online and DeepLearning.AI on Coursera, July 2024">
                 <span class="lp-vinyl" aria-hidden="true"></span>
                 <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A1</span><span class="lp-title">Machine Learning Specialization</span><span class="lp-meta">Stanford Online · 2024</span></span>
               </button>
-              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="1" style="--lab:#ff3d8b" data-doc="assets/img/credentials/ge-ept-english.jpg" data-alt="Golden English Proficiency Test certificate, overall score 597, May 2026">
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="1" data-group="ml" style="--lab:#ff3d8b" data-doc="assets/img/credentials/math-for-ml.jpg" data-alt="Mathematics for Machine Learning and Data Science Specialization certificate from DeepLearning.AI on Coursera, July 2024">
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A2</span><span class="lp-title">English Proficiency · 597</span><span class="lp-meta">GE-EPT · 2026</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A2</span><span class="lp-title">Math for ML &amp; Data Science</span><span class="lp-meta">DeepLearning.AI · 2024</span></span>
               </button>
-              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="2" style="--lab:#22d3ff" data-doc="assets/img/credentials/bangkit-transcript.jpg" data-alt="Bangkit 2024 interim transcript, Machine Learning path, 958 hours">
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="2" data-group="ml" style="--lab:#22d3ff" data-doc="assets/img/credentials/tf-advanced.jpg" data-alt="TensorFlow: Advanced Techniques Specialization certificate from DeepLearning.AI on Coursera, May 2024">
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A3</span><span class="lp-title">Bangkit Academy · ML Path</span><span class="lp-meta">Google · GoTo · Traveloka · 2024</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A3</span><span class="lp-title">TensorFlow: Advanced Techniques</span><span class="lp-meta">DeepLearning.AI · 2024</span></span>
               </button>
-
-              <span class="rail-tab tab-exp" aria-hidden="true">Work</span>
-              <button class="lp lp-exp" type="button" role="option" aria-selected="false" data-i="3" style="--lab:#e9ff2e" data-card="card-mandiri">
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="3" data-group="ml" style="--lab:#3dff8a" data-doc="assets/img/credentials/tf-data-deployment.jpg" data-alt="TensorFlow: Data and Deployment Specialization certificate from DeepLearning.AI on Coursera, May 2024">
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Work</span><span class="lp-side">B1</span><span class="lp-title">Bank Mandiri · IT Infrastructure</span><span class="lp-meta">Aug 2026 — Now</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A4</span><span class="lp-title">TensorFlow: Data &amp; Deployment</span><span class="lp-meta">DeepLearning.AI · 2024</span></span>
               </button>
-              <button class="lp lp-exp" type="button" role="option" aria-selected="false" data-i="4" style="--lab:#3dff8a" data-doc="assets/img/credentials/goto-completion.jpg" data-alt="GoTo Gojek Tokopedia completion of internship program letter, Data Scientist Intern, January to December 2025">
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="4" data-group="ml" style="--lab:#ffb12b" data-doc="assets/img/credentials/tf-developer.jpg" data-alt="DeepLearning.AI TensorFlow Developer Professional Certificate on Coursera, May 2024">
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Work</span><span class="lp-side">B2</span><span class="lp-title">GoTo · Data Scientist Intern</span><span class="lp-meta">Completion letter · 2025</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A5</span><span class="lp-title">TensorFlow Developer</span><span class="lp-meta">DeepLearning.AI · Prof. Cert · 2024</span></span>
               </button>
-              <button class="lp lp-exp" type="button" role="option" aria-selected="false" data-i="5" style="--lab:#22d3ff" data-doc="assets/img/credentials/bsi-internship.jpg" data-alt="Bank Syariah Indonesia internship certificate, BSI Internship Program Batch 7, IT and Development and Digital Ops">
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="5" data-group="ml" style="--lab:#4d79ff" data-doc="assets/img/credentials/bangkit-transcript.jpg" data-alt="Bangkit 2024 interim transcript, Machine Learning path, 958 hours">
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Work</span><span class="lp-side">B3</span><span class="lp-title">BSI · Internship Batch 7</span><span class="lp-meta">MSIB Kampus Merdeka · 2024</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">A6</span><span class="lp-title">Bangkit Academy · ML Path</span><span class="lp-meta">Google · GoTo · Traveloka · 2024</span></span>
               </button>
 
-              <span class="rail-tab tab-edu" aria-hidden="true">School</span>
-              <button class="lp lp-edu" type="button" role="option" aria-selected="false" data-i="6" style="--lab:#4d79ff" data-card="card-ipb">
+              <!-- Data -->
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="6" data-group="data" style="--lab:#22d3ff" data-doc="assets/img/credentials/dicoding-data-python.jpg" data-alt="Dicoding certificate of competency for Belajar Analisis Data dengan Python, March 2024, valid until March 2027" hidden>
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Edu</span><span class="lp-side">C1</span><span class="lp-title">IPB University</span><span class="lp-meta">B.Sc. Computer Science · 2021–25</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">B1</span><span class="lp-title">Data Analysis with Python</span><span class="lp-meta">Dicoding · 2024</span></span>
               </button>
-              <button class="lp lp-edu" type="button" role="option" aria-selected="false" data-i="7" style="--lab:#ff3b24" data-card="card-himalkom">
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="7" data-group="data" style="--lab:#e9ff2e" data-doc="assets/img/credentials/google-process-data.jpg" data-alt="Google course certificate for Process Data from Dirty to Clean on Coursera, March 2024" hidden>
                 <span class="lp-vinyl" aria-hidden="true"></span>
-                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Edu</span><span class="lp-side">C2</span><span class="lp-title">HIMALKOM IPB</span><span class="lp-meta">HR Development Staff · 2023</span></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">B2</span><span class="lp-title">Process Data from Dirty to Clean</span><span class="lp-meta">Google · 2024</span></span>
+              </button>
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="8" data-group="data" style="--lab:#ff3d8b" data-doc="assets/img/credentials/google-analyze-data.jpg" data-alt="Google course certificate for Analyze Data to Answer Questions on Coursera, March 2024" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">B3</span><span class="lp-title">Analyze Data to Answer Questions</span><span class="lp-meta">Google · 2024</span></span>
+              </button>
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="9" data-group="data" style="--lab:#3dff8a" data-doc="assets/img/credentials/google-share-data.jpg" data-alt="Google course certificate for Share Data Through the Art of Visualization on Coursera, March 2024" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">B4</span><span class="lp-title">Share Data Through Visualization</span><span class="lp-meta">Google · 2024</span></span>
+              </button>
+
+              <!-- Dev & Language -->
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="10" data-group="dev" style="--lab:#ff3d8b" data-doc="assets/img/credentials/ge-ept-english.jpg" data-alt="Golden English Proficiency Test certificate, overall score 597, May 2026" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">C1</span><span class="lp-title">English Proficiency · 597</span><span class="lp-meta">GE-EPT · 2026</span></span>
+              </button>
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="11" data-group="dev" style="--lab:#ffb12b" data-doc="assets/img/credentials/google-git-github.jpg" data-alt="Google course certificate for Introduction to Git and GitHub on Coursera, February 2024" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">C2</span><span class="lp-title">Introduction to Git &amp; GitHub</span><span class="lp-meta">Google · 2024</span></span>
+              </button>
+              <button class="lp lp-cert" type="button" role="option" aria-selected="false" data-i="12" data-group="dev" style="--lab:#22d3ff" data-doc="assets/img/credentials/google-python-os.jpg" data-alt="Google course certificate for Using Python to Interact with the Operating System on Coursera, February 2024" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Cert</span><span class="lp-side">C3</span><span class="lp-title">Python &amp; the Operating System</span><span class="lp-meta">Google · 2024</span></span>
+              </button>
+
+              <!-- Work -->
+              <button class="lp lp-exp" type="button" role="option" aria-selected="false" data-i="13" data-group="work" style="--lab:#e9ff2e" data-card="card-mandiri" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Work</span><span class="lp-side">D1</span><span class="lp-title">Bank Mandiri · IT Infrastructure</span><span class="lp-meta">Aug 2026 — Now</span></span>
+              </button>
+              <button class="lp lp-exp" type="button" role="option" aria-selected="false" data-i="14" data-group="work" style="--lab:#3dff8a" data-doc="assets/img/credentials/goto-completion.jpg" data-alt="GoTo Gojek Tokopedia completion of internship program letter, Data Scientist Intern, January to December 2025" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Work</span><span class="lp-side">D2</span><span class="lp-title">GoTo · Data Scientist Intern</span><span class="lp-meta">Completion letter · 2025</span></span>
+              </button>
+              <button class="lp lp-exp" type="button" role="option" aria-selected="false" data-i="15" data-group="work" style="--lab:#22d3ff" data-doc="assets/img/credentials/bsi-internship.jpg" data-alt="Bank Syariah Indonesia internship certificate, BSI Internship Program Batch 7, IT and Development and Digital Ops" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Work</span><span class="lp-side">D3</span><span class="lp-title">BSI · Internship Batch 7</span><span class="lp-meta">MSIB Kampus Merdeka · 2024</span></span>
+              </button>
+
+              <!-- School -->
+              <button class="lp lp-edu" type="button" role="option" aria-selected="false" data-i="16" data-group="edu" style="--lab:#4d79ff" data-card="card-ipb" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Edu</span><span class="lp-side">E1</span><span class="lp-title">IPB University</span><span class="lp-meta">B.Sc. Computer Science · 2021–25</span></span>
+              </button>
+              <button class="lp lp-edu" type="button" role="option" aria-selected="false" data-i="17" data-group="edu" style="--lab:#ff3b24" data-card="card-himalkom" hidden>
+                <span class="lp-vinyl" aria-hidden="true"></span>
+                <span class="lp-sleeve"><span class="lp-art" aria-hidden="true"></span><span class="lp-kind">Edu</span><span class="lp-side">E2</span><span class="lp-title">HIMALKOM IPB</span><span class="lp-meta">HR Development Staff · 2023</span></span>
               </button>
             </div>
+            <div class="crate-front" aria-hidden="true"><span class="crate-stencil" id="crateLabel">ML &amp; AI</span></div>
+          </div>
+
+          <div class="crate-foot">
+            <button class="rack-nav rack-prev" type="button" aria-label="Previous record"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <p class="crate-now"><span id="crateNow">A1 · Machine Learning Specialization</span><b id="crateCount">1 / 6</b></p>
             <button class="rack-nav rack-next" type="button" aria-label="Next record"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
           </div>
-          <div class="rack-progress" aria-hidden="true"><i id="rackBar"></i></div>
         </div>
 
         <!-- Gatefold album: the cover swings open to unveil the document inside -->
@@ -475,16 +525,57 @@
             <a class="cd-link" href="https://coursera.org/verify/specialization/XVM9SK2EXZKR" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
           <article class="cd" data-i="1">
-            <p class="cd-year">May 2026 · Certification</p>
-            <h3 class="cd-title">English Proficiency · Score 597</h3>
-            <p class="cd-inst">Golden English Proficiency Test (GE-EPT) · valid until May 2027</p>
-            <ul class="cd-scores">
-              <li><span>Listening Comprehension</span><b>65</b></li>
-              <li><span>Structure &amp; Written Expressions</span><b>57</b></li>
-              <li><span>Vocabulary &amp; Reading Comprehension</span><b>57</b></li>
+            <p class="cd-year">Jul 2024 · Certification</p>
+            <h3 class="cd-title">Mathematics for Machine Learning and Data Science</h3>
+            <p class="cd-inst">DeepLearning.AI · Coursera · 3 courses</p>
+            <p class="cd-desc">The math under the models: linear algebra, calculus, and probability and statistics, taught by Luis Serrano.</p>
+            <ul class="cd-scores cd-scores-plain">
+              <li><span>Linear Algebra for Machine Learning and Data Science</span></li>
+              <li><span>Calculus for Machine Learning and Data Science</span></li>
+              <li><span>Probability &amp; Statistics for Machine Learning &amp; Data Science</span></li>
             </ul>
+            <a class="cd-link" href="https://coursera.org/verify/specialization/RL2K462FGGCV" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
           <article class="cd" data-i="2">
+            <p class="cd-year">May 2024 · Certification</p>
+            <h3 class="cd-title">TensorFlow: Advanced Techniques</h3>
+            <p class="cd-inst">DeepLearning.AI · Coursera · 4 courses</p>
+            <p class="cd-desc">Functional API and custom models, distributed training, object detection and image segmentation, and generative deep learning (style transfer, VAEs, GANs), taught by Laurence Moroney.</p>
+            <ul class="cd-scores cd-scores-plain">
+              <li><span>Custom Models, Layers, and Loss Functions with TensorFlow</span></li>
+              <li><span>Custom and Distributed Training with TensorFlow</span></li>
+              <li><span>Advanced Computer Vision with TensorFlow</span></li>
+              <li><span>Generative Deep Learning with TensorFlow</span></li>
+            </ul>
+            <a class="cd-link" href="https://coursera.org/verify/specialization/RNXT7HC3PDNW" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="3">
+            <p class="cd-year">May 2024 · Certification</p>
+            <h3 class="cd-title">TensorFlow: Data and Deployment</h3>
+            <p class="cd-inst">DeepLearning.AI · Coursera · 4 courses</p>
+            <p class="cd-desc">Taking models out of the notebook: running them in the browser and on mobile devices, building data pipelines, and deploying them in production.</p>
+            <ul class="cd-scores cd-scores-plain">
+              <li><span>Browser-based Models with TensorFlow.js</span></li>
+              <li><span>Device-based Models with TensorFlow Lite</span></li>
+              <li><span>Data Pipelines with TensorFlow Data Services</span></li>
+              <li><span>Advanced Deployment Scenarios with TensorFlow</span></li>
+            </ul>
+            <a class="cd-link" href="https://coursera.org/verify/specialization/HYLU73QMB4MS" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="4">
+            <p class="cd-year">May 2024 · Certification</p>
+            <h3 class="cd-title">TensorFlow Developer Professional Certificate</h3>
+            <p class="cd-inst">DeepLearning.AI · Coursera · 4 courses</p>
+            <p class="cd-desc">Building and training neural networks in TensorFlow for computer vision, natural language processing, and time series forecasting.</p>
+            <ul class="cd-scores cd-scores-plain">
+              <li><span>Introduction to TensorFlow for AI, ML, and Deep Learning</span></li>
+              <li><span>Convolutional Neural Networks in TensorFlow</span></li>
+              <li><span>Natural Language Processing in TensorFlow</span></li>
+              <li><span>Sequences, Time Series and Prediction</span></li>
+            </ul>
+            <a class="cd-link" href="https://coursera.org/verify/professional-cert/3WGJH92S6NZF" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="5">
             <p class="cd-year">Feb — Jun 2024 · Certification</p>
             <h3 class="cd-title">Bangkit Academy · Machine Learning Path</h3>
             <p class="cd-inst">Bangkit 2024 · by Google, GoTo, Traveloka · Kampus Merdeka</p>
@@ -497,7 +588,59 @@
               <li><span>Google Data Analytics</span><b>88.6</b></li>
             </ul>
           </article>
-          <article class="cd" data-i="3">
+          <article class="cd" data-i="6">
+            <p class="cd-year">Mar 2024 · Certification</p>
+            <h3 class="cd-title">Belajar Analisis Data dengan Python</h3>
+            <p class="cd-inst">Dicoding Academy · Google Developers training partner · valid until Mar 2027</p>
+            <p class="cd-desc">Data analysis from start to finish in Python: descriptive statistics, data wrangling, exploratory data analysis, visualization, and an interactive Streamlit dashboard. Passed with a final exam and a graded analysis project.</p>
+            <a class="cd-link" href="https://www.dicoding.com/certificates/QLZ945DN7P5D" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="7">
+            <p class="cd-year">Mar 2024 · Certification</p>
+            <h3 class="cd-title">Process Data from Dirty to Clean</h3>
+            <p class="cd-inst">Google · Coursera · Google Data Analytics course</p>
+            <p class="cd-desc">Checking data integrity, cleaning data with spreadsheets and SQL, and verifying and documenting every cleaning step.</p>
+            <a class="cd-link" href="https://coursera.org/verify/58YW5ZCUAFUH" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="8">
+            <p class="cd-year">Mar 2024 · Certification</p>
+            <h3 class="cd-title">Analyze Data to Answer Questions</h3>
+            <p class="cd-inst">Google · Coursera · Google Data Analytics course</p>
+            <p class="cd-desc">Organizing, formatting and aggregating data, then running calculations in spreadsheets and SQL to answer business questions.</p>
+            <a class="cd-link" href="https://coursera.org/verify/E9VSSGJ2TXV4" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="9">
+            <p class="cd-year">Mar 2024 · Certification</p>
+            <h3 class="cd-title">Share Data Through the Art of Visualization</h3>
+            <p class="cd-inst">Google · Coursera · Google Data Analytics course</p>
+            <p class="cd-desc">Designing clear visualizations and dashboards in Tableau, and presenting findings as a data story.</p>
+            <a class="cd-link" href="https://coursera.org/verify/J83XLMC4FAU8" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="10">
+            <p class="cd-year">May 2026 · Certification</p>
+            <h3 class="cd-title">English Proficiency · Score 597</h3>
+            <p class="cd-inst">Golden English Proficiency Test (GE-EPT) · valid until May 2027</p>
+            <ul class="cd-scores">
+              <li><span>Listening Comprehension</span><b>65</b></li>
+              <li><span>Structure &amp; Written Expressions</span><b>57</b></li>
+              <li><span>Vocabulary &amp; Reading Comprehension</span><b>57</b></li>
+            </ul>
+          </article>
+          <article class="cd" data-i="11">
+            <p class="cd-year">Feb 2024 · Certification</p>
+            <h3 class="cd-title">Introduction to Git and GitHub</h3>
+            <p class="cd-inst">Google · Coursera · Google IT Automation with Python course</p>
+            <p class="cd-desc">Version control with Git (commits, branches, merging and resolving conflicts), plus working with remotes and pull requests on GitHub.</p>
+            <a class="cd-link" href="https://coursera.org/verify/PDKMUV87VCEC" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="12">
+            <p class="cd-year">Feb 2024 · Certification</p>
+            <h3 class="cd-title">Using Python to Interact with the Operating System</h3>
+            <p class="cd-inst">Google · Coursera · Google IT Automation with Python course</p>
+            <p class="cd-desc">Python scripts that work with files and processes, regular expressions, Bash scripting, and automated tests.</p>
+            <a class="cd-link" href="https://coursera.org/verify/WVAX24G5MCNJ" target="_blank" rel="noopener"><span>Verify certificate</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </article>
+          <article class="cd" data-i="13">
             <p class="cd-year">Aug 2026 — Now · Experience</p>
             <h3 class="cd-title">IT Infrastructure Intern</h3>
             <p class="cd-inst">Bank Mandiri · Internal Control &amp; Governance · Jakarta</p>
@@ -507,27 +650,27 @@
             </ul>
             <a class="cd-link" href="#experience"><span>See the experience track</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
-          <article class="cd" data-i="4">
+          <article class="cd" data-i="14">
             <p class="cd-year">Jan 6 — Dec 7, 2025 · Experience</p>
             <h3 class="cd-title">Completion of Internship Program</h3>
             <p class="cd-inst">PT GoTo Gojek Tokopedia Tbk · Data Scientist Intern · SahabatAI</p>
             <p class="cd-desc">Official letter confirming I completed the full internship program. Day to day: building 10,000+ LLM data points, evaluating 10B+ parameter vision-language models, and red-teaming LLM safeguards.</p>
             <a class="cd-link" href="#experience"><span>See the experience track</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
-          <article class="cd" data-i="5">
+          <article class="cd" data-i="15">
             <p class="cd-year">Aug — Dec 2024 · Experience</p>
             <h3 class="cd-title">BSI Internship Program Batch 7</h3>
             <p class="cd-inst">Bank Syariah Indonesia · MSIB Kampus Merdeka · IT &amp; Development &amp; Digital Ops</p>
             <p class="cd-desc">Certificate for the Kampus Merdeka certified internship at BSI, where I analyzed 30,000+ QRIS/EDC merchant records and helped design the failed-disbursement resolution workflow.</p>
             <a class="cd-link" href="#experience"><span>See the experience track</span> <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </article>
-          <article class="cd" data-i="6">
+          <article class="cd" data-i="16">
             <p class="cd-year">Aug 2021 — Oct 2025 · Education</p>
             <h3 class="cd-title">Bachelor's Degree in Computer Science</h3>
             <p class="cd-inst">IPB University · Bogor · GPA 3.48 / 4.00</p>
             <p class="cd-desc">Relevant coursework: Database Systems, Data Mining, Algorithms, Data Structures, Operating Systems, Machine Learning, and Artificial Intelligence. Final project: YOLOv12 object detection on 1,200+ drone-captured images, reaching a mAP50-95 of 0.942.</p>
           </article>
-          <article class="cd" data-i="7">
+          <article class="cd" data-i="17">
             <p class="cd-year">Jan — Dec 2023 · Education</p>
             <h3 class="cd-title">Human Resource Development Staff</h3>
             <p class="cd-inst">HIMALKOM IPB · Computer Science student association</p>
@@ -735,6 +878,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="assets/js/main.js?v=20261111" defer></script>
+  <script src="assets/js/main.js?v=20261123b" defer></script>
 </body>
 </html>
