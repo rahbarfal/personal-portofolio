@@ -779,12 +779,125 @@
     const pmClose = $('.lb-close', pm);
     let pmLast = null;
     let pmTimer;
+    let pmStack = null;
+
+    /* Stacked-paper gallery: the top sheet swaps to the back (next) or the
+       bottom sheet swaps to the front (prev), like shuffling two papers. */
+    const POSES = ['none', 'translate(14px, 10px) rotate(2.6deg)', 'translate(-12px, 15px) rotate(-2.2deg)', 'translate(6px, 20px) rotate(1.2deg)'];
+    const SWAP_MS = 680;
+    const initStack = (gallery) => {
+      const stack = $('.pm-stack', gallery);
+      const pages = stack ? $$('.pm-page', stack) : [];
+      const n = pages.length;
+      if (!n) return null;
+      const order = pages.map((_, i) => i); // order[0] is the sheet on top
+      let count = null;
+      let busy = false;
+      const timers = new Set();
+      const later = (fn, ms) => { const t = setTimeout(() => { timers.delete(t); fn(); }, ms); timers.add(t); };
+      const pose = (depth) => POSES[Math.min(depth, POSES.length - 1)];
+
+      const layout = () => {
+        order.forEach((pi, depth) => {
+          const p = pages[pi];
+          p.dataset.depth = String(Math.min(depth, 3));
+          p.style.zIndex = String(n - depth);
+          p.style.transform = pose(depth);
+          if (depth) p.setAttribute('aria-hidden', 'true'); else p.removeAttribute('aria-hidden');
+        });
+        if (count) count.textContent = `${order[0] + 1} / ${n}`;
+      };
+      layout();
+      if (n < 2) return null;
+
+      stack.classList.add('is-multi');
+      const bar = document.createElement('div');
+      bar.className = 'pm-ctrl';
+      bar.innerHTML =
+        '<button class="pm-nav pm-prev" type="button" aria-label="Previous image"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>' +
+        '<span class="pm-count" aria-live="polite"></span>' +
+        '<button class="pm-nav pm-next" type="button" aria-label="Next image"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>';
+      gallery.append(bar);
+      count = $('.pm-count', bar);
+      layout();
+
+      // Fly one sheet out to the left and back in at its new depth; the stack
+      // re-orders at the halfway point, while that sheet is clear of the pile.
+      const swap = (dir, from) => {
+        if (busy) return;
+        const sheet = pages[dir > 0 ? order[0] : order[n - 1]];
+        const reorder = () => {
+          if (dir > 0) order.push(order.shift()); else order.unshift(order.pop());
+          layout();
+        };
+        if (reduceMotion) { reorder(); return; }
+        busy = true;
+        sheet.style.transition = 'none';
+        const start = from || sheet.style.transform || 'none';
+        const end = dir > 0 ? pose(n - 1) : 'none';
+        const anim = sheet.animate([
+          { transform: start, easing: 'cubic-bezier(.3, .7, .4, 1)' },
+          { transform: 'translate(-74%, -3%) rotate(-10deg)', offset: 0.46, easing: 'cubic-bezier(.45, 0, .2, 1)' },
+          { transform: end },
+        ], { duration: SWAP_MS });
+        later(reorder, SWAP_MS * 0.46);
+        const done = () => { sheet.style.transition = ''; busy = false; };
+        anim.onfinish = done;
+        anim.oncancel = done;
+      };
+      const next = (from) => swap(1, from);
+      const prev = () => swap(-1);
+      $('.pm-next', bar).addEventListener('click', () => next());
+      $('.pm-prev', bar).addEventListener('click', prev);
+
+      // Swipe: the top sheet follows the finger; far enough left = next, right = prev
+      let drag = null;
+      stack.addEventListener('pointerdown', (e) => {
+        if (busy || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        const top = pages[order[0]];
+        if (!top.contains(e.target)) return;
+        drag = { id: e.pointerId, x: e.clientX, dx: 0, top };
+        top.style.transition = 'none';
+        stack.setPointerCapture(e.pointerId);
+        stack.classList.add('is-dragging');
+      });
+      stack.addEventListener('pointermove', (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        drag.dx = e.clientX - drag.x;
+        drag.top.style.transform = `translateX(${drag.dx}px) rotate(${drag.dx / 28}deg)`;
+      });
+      const endDrag = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const { dx, top } = drag;
+        drag = null;
+        stack.classList.remove('is-dragging');
+        if (e.type !== 'pointercancel' && dx < -60) { next(top.style.transform); return; }
+        top.style.transition = '';
+        top.style.transform = pose(0); // snap back
+        if (e.type !== 'pointercancel' && dx > 60) prev();
+      };
+      stack.addEventListener('pointerup', endDrag);
+      stack.addEventListener('pointercancel', endDrag);
+
+      return {
+        next: () => next(),
+        prev,
+        stop: () => {
+          timers.forEach(clearTimeout);
+          timers.clear();
+          pages.forEach((p) => p.getAnimations().forEach((a) => a.cancel()));
+        },
+      };
+    };
+
     const openPm = (key, trigger) => {
       const tpl = document.getElementById(`proj-${key}`);
       if (!tpl) return;
       clearTimeout(pmTimer);
+      pmStack?.stop();
       pmBody.replaceChildren(tpl.content.cloneNode(true));
-      pmSheet.classList.toggle('is-portrait', tpl.dataset.layout === 'portrait');
+      const gallery = $('.pm-gallery', pmBody);
+      pmStack = gallery ? initStack(gallery) : null;
       pmLast = trigger;
       pm.hidden = false;
       pm.scrollTop = 0;
@@ -797,6 +910,8 @@
       if (pm.hidden) return;
       pm.classList.remove('open');
       body.classList.remove('locked');
+      pmStack?.stop();
+      pmStack = null;
       pmTimer = setTimeout(() => { pm.hidden = true; pmBody.replaceChildren(); }, reduceMotion ? 0 : 320);
       pmLast?.focus?.({ preventScroll: true });
     };
@@ -805,7 +920,14 @@
     document.addEventListener('keydown', (e) => {
       if (pm.hidden) return;
       if (e.key === 'Escape') closePm();
-      if (e.key === 'Tab') { e.preventDefault(); pmClose.focus(); } // only one control inside
+      if (e.key === 'ArrowRight') { e.preventDefault(); pmStack?.next(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); pmStack?.prev(); }
+      if (e.key === 'Tab') { // keep focus inside the sheet
+        const f = $$('button', pm).filter((b) => b.offsetParent !== null || b === pmClose);
+        const i = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length]?.focus();
+      }
     });
   }
 

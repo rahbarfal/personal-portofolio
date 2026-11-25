@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Bungee&family=Permanent+Marker&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20261123c" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20261125a" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -238,9 +238,21 @@
         <!-- TODO: add real links/screenshots when ready -->
         <li class="bposter bposter-open"><div class="bp">
           <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
-          <span class="bp-art art-yellow" aria-hidden="true">
-            <span class="mock"><i style="height:45%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:85%"></i><i style="height:62%"></i><i style="height:92%"></i><i style="height:74%"></i></span>
-            <span class="bp-num">GovHub</span>
+          <span class="bp-art bp-art-photo" aria-hidden="true">
+            <img class="bp-shot" src="assets/img/projects/fleur-thumb.jpg" alt="" width="960" height="600" loading="lazy" decoding="async">
+            <span class="go-sticker">Open project ↗</span>
+          </span>
+          <h3>Fleur — Personal Dashboard</h3>
+          <p>A full-stack Next.js and PostgreSQL app that puts my money, notes, workouts and email on one calm screen, with a live demo that gives every visitor a private sandbox.</p>
+          <span class="bp-meta">2026 · Personal project</span>
+          <span class="bp-cta" aria-hidden="true">See the app →</span>
+          <button class="bp-open" type="button" data-project="fleur" aria-haspopup="dialog" aria-label="Open Fleur project details"></button>
+        </div></li>
+
+        <li class="bposter bposter-open"><div class="bp">
+          <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
+          <span class="bp-art bp-art-photo" aria-hidden="true">
+            <img class="bp-shot" src="assets/img/projects/govhub-thumb.jpg" alt="" width="960" height="558" loading="lazy" decoding="async">
             <span class="go-sticker">Open project ↗</span>
           </span>
           <h3>GovHub — IFS Governance Hub</h3>
@@ -252,8 +264,8 @@
 
         <li class="bposter bposter-open"><div class="bp">
           <span class="tape tape-l" aria-hidden="true"></span><span class="tape tape-r" aria-hidden="true"></span>
-          <span class="bp-art art-pink" aria-hidden="true">
-            <span class="bp-num">0.942</span><span class="bp-unit">mAP50-95</span>
+          <span class="bp-art bp-art-photo" aria-hidden="true">
+            <img class="bp-shot bp-shot-center" src="assets/img/projects/crazyflie-thumb.jpg" alt="" width="960" height="964" loading="lazy" decoding="async">
             <span class="go-sticker">Open project ↗</span>
           </span>
           <h3>Drone Object Detection with YOLOv12</h3>
@@ -294,15 +306,6 @@
           <h3>Computer Vision PWA — Capstone</h3>
           <p>Team capstone project that built a computer vision solution delivered as a Progressive Web App.</p>
           <span class="bp-meta">2024 · Bangkit Academy</span>
-        </div></li>
-
-        <!-- TODO: replace with your next project (e.g. a SQL / Tableau case study) -->
-        <li class="bposter bposter-empty"><div class="bp">
-          <span class="tape tape-l" aria-hidden="true"></span>
-          <span class="bp-art art-blank" aria-hidden="true"><span class="bp-num">+</span></span>
-          <h3>Next project</h3>
-          <p>A space for my next data analysis case study. Stay tuned.</p>
-          <span class="bp-meta">Coming soon</span>
         </div></li>
       </ul>
 
@@ -832,10 +835,60 @@
   </div>
 
   <!-- Project details (content lives in the templates below; edit text there) -->
+  <!-- Each .pm-page inside .pm-stack is one sheet in the stacked gallery; add more figures to add pages -->
+  <template id="proj-fleur">
+    <div class="pm-gallery">
+      <div class="pm-stack">
+        <figure class="pm-page">
+          <img src="assets/img/projects/fleur-overview.png" alt="Fleur overview page: spending against the monthly budget, net worth and a daily cash flow calendar, notes, recent activity, an email digest and the workout month" width="1440" height="900" decoding="async">
+          <figcaption>Overview</figcaption>
+        </figure>
+        <figure class="pm-page">
+          <img src="assets/img/projects/fleur-money.png" alt="Fleur money page: wallet balances, cash flow with income, expenses and budget used, a gain and loss calendar, a stock watchlist with price charts, and income and expense lists" width="1440" height="900" decoding="async">
+          <figcaption>Money</figcaption>
+        </figure>
+        <figure class="pm-page">
+          <img src="assets/img/projects/fleur-notes.png" alt="Fleur notes page: a searchable list of notes next to the editor showing a note with a heading and a paragraph" width="1440" height="900" decoding="async">
+          <figcaption>Notes editor</figcaption>
+        </figure>
+        <figure class="pm-page">
+          <img src="assets/img/projects/fleur-workout.png" alt="Fleur workout page: a weekly calendar of planned and completed sessions, weekly progress for strength, cardio and mobility, and a workout log" width="1440" height="900" decoding="async">
+          <figcaption>Workout planner</figcaption>
+        </figure>
+        <figure class="pm-page">
+          <img src="assets/img/projects/fleur-login.png" alt="Fleur sign-in page: an email and password form with a Try the demo button, over a line-art meadow with a sun, clouds and flowers" width="1440" height="900" decoding="async">
+          <figcaption>Sign-in page</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="pm-text">
+      <span class="pm-meta">2026 · Personal project · Full-stack</span>
+      <h3 class="pm-title" id="pmTitle">Fleur — Personal Dashboard</h3>
+      <p>A web app I built for the things I check every day: money, email, notes and workouts, on one calm screen. Each person's data stays private, and anyone can try it through a demo.</p>
+      <ul class="pm-points">
+        <li><b>Money:</b> wallets, cash flow by year, month, week or day, a monthly budget, and a stock watchlist with live IDX prices.</li>
+        <li><b>Notes &amp; workouts:</b> a Notion-style Markdown editor, and a drag-to-plan weekly workout calendar with progress per type.</li>
+        <li><b>Private by design:</b> every query is scoped to its user, enforced by composite foreign keys and row-level security in PostgreSQL. "Today" and budgets follow each user's time zone.</li>
+        <li><b>A real demo:</b> each visitor gets a throwaway account with about a year of generated data, deleted after an hour.</li>
+      </ul>
+      <ul class="pm-tags" aria-label="Tools"><li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Drizzle ORM</li><li>Supabase</li><li>Tailwind CSS</li><li>Vercel</li></ul>
+      <div class="pm-links">
+        <a class="btn btn-sm btn-yellow" href="https://fleur-super.vercel.app" target="_blank" rel="noopener"><span>Try the live demo</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-sm btn-cyan" href="https://github.com/rahbarfal/Fleur" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-gh"/></svg><span>View on GitHub</span></a>
+      </div>
+      <p class="pm-note">Click <i>Try the demo</i> on the sign-in page. No account needed. Gmail sync is still in progress, so email isn't in the demo.</p>
+    </div>
+  </template>
+
   <template id="proj-govhub">
-    <figure class="pm-shot">
-      <img src="assets/img/projects/govhub.jpg" alt="GovHub overview dashboard: audit totals and progress cards, audits per stage bar chart, monthly incoming audits, findings by status donut chart, and audit progress per PIC" width="1920" height="1080" decoding="async">
-    </figure>
+    <div class="pm-gallery">
+      <div class="pm-stack">
+        <figure class="pm-page">
+          <img src="assets/img/projects/govhub.jpg" alt="GovHub overview dashboard: audit totals and progress, data request fulfilment, audits per stage, monthly incoming audits, DMTL findings, and audit progress per PIC" width="2400" height="1394" decoding="async">
+          <figcaption>Overview dashboard</figcaption>
+        </figure>
+      </div>
+    </div>
     <div class="pm-text">
       <span class="pm-meta">2026 · Bank Mandiri · Internship</span>
       <h3 class="pm-title" id="pmTitle">GovHub — IFS Governance Hub</h3>
@@ -850,10 +903,19 @@
     </div>
   </template>
 
-  <template id="proj-crazyflie" data-layout="portrait">
-    <figure class="pm-shot">
-      <img src="assets/img/projects/crazyflie-thesis.jpg" alt="Thesis cover: Pengembangan Model Identifikasi Varietas Tanaman Cabai Berbasis YOLOv12 Menggunakan Dataset Citra Drone Crazyflie, by Naufal Akbar Rahardjo, IPB University, 2025" width="1124" height="1600" decoding="async">
-    </figure>
+  <template id="proj-crazyflie">
+    <div class="pm-gallery">
+      <div class="pm-stack">
+        <figure class="pm-page">
+          <img src="assets/img/projects/crazyflie-thesis.jpg" alt="Thesis cover: Pengembangan Model Identifikasi Varietas Tanaman Cabai Berbasis YOLOv12 Menggunakan Dataset Citra Drone Crazyflie, by Naufal Akbar Rahardjo, IPB University, 2025" width="1124" height="1600" decoding="async">
+          <figcaption>Thesis cover</figcaption>
+        </figure>
+        <figure class="pm-page">
+          <img src="assets/img/projects/crazyflie-results.jpg" alt="Thesis results: a grid of drone images with YOLOv12 detections labeled Syakira, Triwarsana and Adelina, next to Table 8 (overall test mAP50, mAP75 and mAP50-95 with 95% confidence intervals) and Table 9 (AP50-95 per chili variety)" width="2440" height="1204" decoding="async">
+          <figcaption>Detection samples and test results</figcaption>
+        </figure>
+      </div>
+    </div>
     <div class="pm-text">
       <span class="pm-meta">2025 · Undergraduate thesis · IPB University</span>
       <h3 class="pm-title" id="pmTitle">Chili Variety Identification with YOLOv12</h3>
@@ -878,6 +940,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="assets/js/main.js?v=20261123b" defer></script>
+  <script src="assets/js/main.js?v=20261124a" defer></script>
 </body>
 </html>
